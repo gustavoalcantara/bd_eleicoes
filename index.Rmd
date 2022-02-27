@@ -1,7 +1,12 @@
 ---
-title: "R Notebook"
+title: "A relação entre o IDHM e a votação presidencial de 2018 no estado de SP"
+author: "Gustavo Casteletti de Alcântara"
+date: "27/02/2022"
 output:
-  html_document:
-    df_print: paged
+  prettydoc::html_pretty:
+    theme: cerulean
+editor_options: 
+  chunk_output_type: console
 ---
+Inicio dos trabalhos do Case da Base dos Dados
 
