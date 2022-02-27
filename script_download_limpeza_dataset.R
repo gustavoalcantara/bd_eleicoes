@@ -34,7 +34,7 @@ dplyr::select(df, ano,
   group_by(id_municipio) |> 
   mutate(porcentagem = votos/sum(votos)*100) -> ele_pr_sp_2018 
 
-write.csv(ele_pr_sp_2018, "ele_pre_sp_2018.csv", row.names = TRUE)
+write.csv(ele_pr_sp_2018, "dados_eleicoes.csv", row.names = TRUE)
 
   
   
