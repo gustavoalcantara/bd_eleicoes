@@ -22,13 +22,19 @@ A tabela a seguir é o dataframe que iremos trabalhar de agora em diante. São u
 ```{r}
 dplyr::glimpse(dados)
 ```
+```{r}
+
+```
 
 ## Votação presidenciável no 1º Turno
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+A partir do df de trabalho, elaborei um gráfico simples agrupando os municipios e a votação para cada partido: 
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 library(tidyverse)
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 dplyr::filter(dados,
               turno==1)|>
-  group_by(id_municipio)|>
+  dplyr::group_by(id_municipio)|>
   ggplot2::ggplot(aes(x=reorder(sigla_partido, porcentagem, FUN=median)
                       , y=porcentagem))+
   geom_boxplot() +
