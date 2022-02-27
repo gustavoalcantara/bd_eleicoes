@@ -22,19 +22,19 @@ df <- bd_collect(query)
 dplyr::glimpse(df) #verificar se tá ok
 
 # Limpeza dos dados e atribuição de Objeto
-library(tidyverse)
-df %>%
-  select(ano,
+dplyr::select(df, ano,
          turno,
          sigla_uf,
          sigla_partido,
          id_municipio,
          votos,
          resultado,
-         cargo) %>% 
-  filter(sigla_uf=="SP", ano==2018, cargo=='presidente') %>%
-  group_by(id_municipio) %>% 
+         cargo) |>
+  filter(sigla_uf=="SP", ano==2018, cargo=='presidente') |>
+  group_by(id_municipio) |> 
   mutate(porcentagem = votos/sum(votos)*100) -> ele_pr_sp_2018 
+
+write.csv(ele_pr_sp_2018, "ele_pre_sp_2018.csv", row.names = TRUE)
 
   
   
