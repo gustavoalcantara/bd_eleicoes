@@ -82,12 +82,13 @@ dplyr::mutate(dadoseidhm,
 ```{r}
 dplyr::filter(dadoseidhm,
               turno==1) |>
-ggplot2::ggplot(aes(x=reorder(sigla_partido, porcentagem, 
+  dplyr::group_by(id_municipio)|>
+  ggplot2::ggplot(aes(x=reorder(sigla_partido, porcentagem, 
                      FUN=median), y=porcentagem,
            fill=classificacao_idhm))+
   geom_boxplot()+
   scale_fill_discrete(breaks=c('medio', 'alto', 'muito alto'))+
   coord_flip()
 ```
-
+Atualizado em 28/2 às 17h20min
 
