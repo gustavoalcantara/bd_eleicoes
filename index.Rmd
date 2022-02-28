@@ -89,3 +89,4 @@ ggplot2::ggplot(aes(x=reorder(sigla_partido, porcentagem,
   scale_fill_discrete(breaks=c('medio', 'alto', 'muito alto'))+
   coord_flip()
 ```
+
