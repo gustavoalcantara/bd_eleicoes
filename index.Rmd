@@ -88,7 +88,8 @@ dplyr::filter(dadoseidhm,
            fill=classificacao_idhm))+
   geom_boxplot()+
   scale_fill_discrete(breaks=c('medio', 'alto', 'muito alto'))+
-  coord_flip()
+  coord_flip()+
+  labs(x = "Partidos", y = "Porcentagem de Votos")
 ```
 Atualizado em 28/2 às 17h20min
 
