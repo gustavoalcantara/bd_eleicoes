@@ -13,7 +13,7 @@ Seguindo a proposta do Case, utilizei, através da [Base dos Dados](https://base
 O acesso e utilização do pacote [basedosdados](https://basedosdados.github.io/mais/api_reference_r/) no Rstudio, o download e limpeza inicial (seleção, filtragem de atributos e criação de variáveis) encontram-se [aqui](https://github.com/gustavoalcantara/bd_eleicoes/blob/master/script_download_limpeza_dataset.R)
 
 ### DF de trabalho e outras proposições
-Com o df pronto para uso, é válido ressaltar que a tabela inicial possuía cerca de 23M de linhas. Se fosse necessário o download deste arquivo em minha máquina, faria a seleção e limpeza dos dados atráves do datalake do Google pela regra SQL que elaborei. Visualize-a [aqui](https://console.cloud.google.com/bigquery?sq=52786671863:dca4197316d34aca8d3f63ef74044d34):  
+Com o df pronto para uso, é válido ressaltar que a tabela inicial possuía cerca de 23M de linhas. Se fosse necessário o download deste arquivo em minha máquina, faria a seleção e limpeza dos dados atráves do datalake do Google pela regra SQL que elaborei. Visualize-a [aqui](https://console.cloud.google.com/bigquery?sq=52786671863:dca4197316d34aca8d3f63ef74044d34).  
 ```{r include=FALSE}
 dados <- read.csv('dados_eleicoes.csv')
 ```
@@ -69,11 +69,7 @@ dplyr::glimpse(dados_idhm)
 ```{r include=FALSE}
 write.csv(dados_idhm, 'idhm_dados.csv', row.names = TRUE) ->dados_idhm
 ```
-
 ## Análise do IDHM com a Porcentagem de voto
-Índices são úteis para avaliar e compreender contextos diversos. É válido afirmar que o estudo do Índice de Desenvolvimento Humano Municipal é referencial de uma série de artigos, livros e discussões que relacionam-o com outras variáveis. Aqui propus relacioná-lo com a votação dos partidos nos municipios do estado de São Paulo. Para isso,   
-
-
-
+Índices são úteis para avaliar e compreender contextos diversos. É válido afirmar que o estudo do Índice de Desenvolvimento Humano Municipal é referencial de uma série de artigos, livros e discussões que relacionam-o com outras variáveis. Aqui propus relacioná-lo com a votação dos partidos nos municipios.Para isso, é necessário classificar o IDHM que varia de Muito Baixo até Muito Alto. Os municipios de São Paulo, em 2010, variam entre IDHM's Médio à muito alto. [Veja Mais.](https://www.br.undp.org/content/brazil/pt/home/idh0/conceitos/o-que-e-o-idhm.html)
 
 
