@@ -90,3 +90,4 @@ ggplot2::ggplot(aes(x=reorder(sigla_partido, porcentagem,
   coord_flip()
 ```
 
+
