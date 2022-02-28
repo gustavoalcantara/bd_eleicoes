@@ -60,16 +60,32 @@ dplyr::left_join(dados,
 ```{r include=FALSE}
 dados_idhm |> 
   mutate(X.x = NULL,
-         X.y = NULL) -> dados_idhm
-```
-
-```{r}
-dplyr::glimpse(dados_idhm)
+         X.y = NULL) -> dadoseidhm
 ```
 ```{r include=FALSE}
-write.csv(dados_idhm, 'idhm_dados.csv', row.names = TRUE) ->dados_idhm
+write.csv(dados_idhm, 'idhm_dados.csv') -> dados_idhm
+```
+```{r}
+dplyr::glimpse(dadoseidhm)
 ```
 ## Análise do IDHM com a Porcentagem de voto
-Índices são úteis para avaliar e compreender contextos diversos. É válido afirmar que o estudo do Índice de Desenvolvimento Humano Municipal é referencial de uma série de artigos, livros e discussões que relacionam-o com outras variáveis. Aqui propus relacioná-lo com a votação dos partidos nos municipios.Para isso, é necessário classificar o IDHM que varia de Muito Baixo até Muito Alto. Os municipios de São Paulo, em 2010, variam entre IDHM's Médio à muito alto. [Veja Mais.](https://www.br.undp.org/content/brazil/pt/home/idh0/conceitos/o-que-e-o-idhm.html)
-
-
+Índices são úteis para avaliar e compreender contextos diversos. É válido afirmar que o estudo do Índice de Desenvolvimento Humano Municipal é referencial de uma série de artigos, livros e discussões que relacionam-o com outras variáveis. Aqui propus relacioná-lo com a votação dos partidos nos municipios.Para isso, é necessário classificar o IDHM que varia de Muito Baixo até Muito Alto. Os municipios de São Paulo, em 2010, variam entre IDHM's Médio à muito alto. [Veja Mais.](https://www.br.undp.org/content/brazil/pt/home/idh0/conceitos/o-que-e-o-idhm.html) Assim, classifiquei o IDHM dos municipios paulsitas de acordo com a regra abaixo e elaborei um gráfico simples para visualizar a relação entre os votos nos candidatos e o IDHM dos municípios.
+### Classificação do IDHM 
+```{r}
+dplyr::mutate(dadoseidhm,
+              classificacao_idhm=case_when(
+                idhm_2010<=0.699~'medio',
+    idhm_2010>=0.700 & idhm_2010<0.799~'alto',
+    idhm_2010>=0.800~'muito alto')) -> dadoseidhm
+```
+### Gráficos
+```{r}
+dplyr::filter(dadoseidhm,
+              turno==1) |>
+ggplot2::ggplot(aes(x=reorder(sigla_partido, porcentagem, 
+                     FUN=median), y=porcentagem,
+           fill=classificacao_idhm))+
+  geom_boxplot()+
+  scale_fill_discrete(breaks=c('medio', 'alto', 'muito alto'))+
+  coord_flip()
+```
