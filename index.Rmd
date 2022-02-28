@@ -22,12 +22,8 @@ A tabela a seguir é o dataframe que iremos trabalhar de agora em diante. São u
 ```{r}
 dplyr::glimpse(dados)
 ```
-```{r}
-
-```
-
 ## Votação presidenciável no 1º Turno
-A partir do df de trabalho, elaborei um gráfico simples agrupando os municipios e a votação para cada partido: 
+A partir do df de trabalho, elaborei um gráfico simples de boxplot agrupando os municípios e a votação para cada partido: 
 ```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 library(tidyverse)
 ```
@@ -41,6 +37,41 @@ dplyr::filter(dados,
   coord_flip()+
   labs(x = "Partidos", y = "Porcentagem de Votos")
 ```
+
+## O IDHM e sua relação com a votação
+Como forma de trabalhar com mais de uma tabela ao mesmo tempo e realizar análises exploratórias que relacionam-se, é necessário ter em mente que um atributo ou mais que estejam presente nas tabelas sejam iguais. Assim, realizei um join (utilizando a biblioteca do dplyr) da tabela do IDHM disponível no site da [PNUD Brasil](https://www.br.undp.org/content/brazil/pt/home/idh0/rankings/idhm-municipios-2010.html) com a Id dos municipios de São Paulo. Porém, é necessário alterar o nome da variável 'Cod.IBGE' para 'id_municipio' para realizar o Join. Essa alteração deixei no script de manipulação dos dados [aqui]   
+```{r include=FALSE}
+idhm <- read.csv('idhm_sp.csv')
+```
+```{r include=FALSE}
+idhm <- dplyr::rename(idhm, id_municipio = "Cod.IBGE")
+```
+```{r}
+dplyr::glimpse(idhm)
+```
+### Join das tabelas
+É necessário realizar a união dos dois dataframes. Para isso vou utilizar a função left_join() do dplyr. 
+```{r include=FALSE}
+dplyr::left_join(dados, 
+                 idhm, 
+                 by='id_municipio'
+) -> dados_idhm
+```
+```{r include=FALSE}
+dados_idhm |> 
+  mutate(X.x = NULL,
+         X.y = NULL) -> dados_idhm
+```
+
+```{r}
+dplyr::glimpse(dados_idhm)
+```
+```{r include=FALSE}
+write.csv(dados_idhm, 'idhm_dados.csv', row.names = TRUE) ->dados_idhm
+```
+
+## Análise do IDHM com a Porcentagem de voto
+Índices são úteis para avaliar e compreender contextos diversos. É válido afirmar que o estudo do Índice de Desenvolvimento Humano Municipal é referencial de uma série de artigos, livros e discussões que relacionam-o com outras variáveis. Aqui propus relacioná-lo com a votação dos partidos nos municipios do estado de São Paulo. Para isso,   
 
 
 
