@@ -9,6 +9,7 @@ idhm <- readxl::read_xlsx(
 #Salvando o Csv
 write.csv(idhm, "idhm_sp.csv", row.names = TRUE)
 
+
 #Rename das Variaveis
 dplyr::rename(x, id_municipio = 'Cod IBGE' ) -> idhm
 
@@ -16,7 +17,7 @@ dplyr::rename(x, id_municipio = 'Cod IBGE' ) -> idhm
 dplyr::left_join(dados, 
                  idhm, 
                  by='id_municipio'
-) -> dados_idhm
+) -> dadoseidhm
 
 hist(idhm$idhm_2010)
 
@@ -29,3 +30,25 @@ idhm %>%
 
 unique(idhm$classificacao_idhm)
 
+#atualizacao 1/3
+read.csv('dados_idhm.csv') -> x
+x |>
+  mutate(classificacao_idhm=case_when(
+    idhm_2010<=0.699~'medio',
+    idhm_2010>=0.700 & idhm_2010<0.799~'alto',
+    idhm_2010>=0.800~'muito alto')) -> x
+
+#teste grafico
+dplyr::filter(x,
+              turno==2) |>
+  dplyr::group_by(id_municipio)|>
+  ggplot2::ggplot(aes(x=idhm_2010,
+                      y=porcentagem,
+                      color=resultado))+
+  geom_point()+
+  geom_smooth()
+
+
+dplyr::filter(x,
+              turno==2) ->y
+  
