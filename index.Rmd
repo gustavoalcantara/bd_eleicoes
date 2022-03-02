@@ -138,6 +138,8 @@ dplyr::filter(dadoseidhm,
 ## Considerações 
 Este case é fruto de uma das etapas do processo seletivo da Base dos Dados. Aqui tentei relacionar uma tabela externa com uma base disponibilizada pela organização, além do acesso do datalake via RStudio. 
 
+Atualização 2/3
+
 
 ## Referências
 ### Datasets
