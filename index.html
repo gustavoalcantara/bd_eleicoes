@@ -12,6 +12,7 @@
 
 <meta name="author" content="Gustavo Casteletti de Alcântara" />
 
+<meta name="date" content="2022-02-03" />
 
 <title>A relação entre o IDHM e a votação presidencial de 2018 no estado de SP</title>
 
@@ -130,7 +131,7 @@ a.sourceLine {
 <section class="page-header">
 <h1 class="title toc-ignore project-name">A relação entre o IDHM e a votação presidencial de 2018 no estado de SP</h1>
 <h4 class="author project-author">Gustavo Casteletti de Alcântara</h4>
-<h4 class="date project-date">27/02/2022</h4>
+<h4 class="date project-date">02/03/2022</h4>
 </section>
 
 
@@ -146,61 +147,276 @@ a.sourceLine {
 <div id="visualização-do-df" class="section level3">
 <h3>Visualização do df</h3>
 <p>A tabela a seguir é o dataframe que iremos trabalhar de agora em diante. São um pouco mais de 9k linhas e 10 colunas ao total. Veja:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(dados)</span></code></pre></div>
-<pre><code>## Rows: 9,675
-## Columns: 10
-## $ X             &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1~
-## $ ano           &lt;int&gt; 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 20~
-## $ turno         &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,~
-## $ sigla_uf      &lt;chr&gt; &quot;SP&quot;, &quot;SP&quot;, &quot;SP&quot;, &quot;SP&quot;, &quot;SP&quot;, &quot;SP&quot;, &quot;SP&quot;, &quot;SP&quot;, &quot;SP&quot;, &quot;S~
-## $ sigla_partido &lt;chr&gt; &quot;MDB&quot;, &quot;PATRIOTA&quot;, &quot;PDT&quot;, &quot;PPL&quot;, &quot;PSOL&quot;, &quot;PDT&quot;, &quot;PDT&quot;, &quot;~
-## $ id_municipio  &lt;int&gt; 3501103, 3501103, 3501103, 3501103, 3501103, 3501152, 35~
-## $ votos         &lt;int&gt; 35, 13, 115, 2, 4, 994, 146, 397, 869, 4, 6, 13, 528, 9,~
-## $ resultado     &lt;chr&gt; &quot;nao eleito&quot;, &quot;nao eleito&quot;, &quot;nao eleito&quot;, &quot;nao eleito&quot;, ~
-## $ cargo         &lt;chr&gt; &quot;presidente&quot;, &quot;presidente&quot;, &quot;presidente&quot;, &quot;presidente&quot;, ~
-## $ porcentagem   &lt;dbl&gt; 0.69624030, 0.25860354, 2.28764671, 0.03978516, 0.079570~</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">X</th>
+<th align="right">ano</th>
+<th align="right">turno</th>
+<th align="left">sigla_uf</th>
+<th align="left">sigla_partido</th>
+<th align="right">id_municipio</th>
+<th align="right">votos</th>
+<th align="left">resultado</th>
+<th align="left">cargo</th>
+<th align="right">porcentagem</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">MDB</td>
+<td align="right">3501103</td>
+<td align="right">35</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">0.6962403</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PATRIOTA</td>
+<td align="right">3501103</td>
+<td align="right">13</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">0.2586035</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PDT</td>
+<td align="right">3501103</td>
+<td align="right">115</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">2.2876467</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PPL</td>
+<td align="right">3501103</td>
+<td align="right">2</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">0.0397852</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PSOL</td>
+<td align="right">3501103</td>
+<td align="right">4</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">0.0795703</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PDT</td>
+<td align="right">3501152</td>
+<td align="right">994</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">5.0771274</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="votação-presidenciável-no-1º-turno" class="section level2">
 <h2>Votação presidenciável no 1º Turno</h2>
 <p>A partir do df de trabalho, elaborei um gráfico simples de boxplot agrupando os municípios e a votação para cada partido:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">filter</span>(dados,</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>              turno<span class="sc">==</span><span class="dv">1</span>)<span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(id_municipio)<span class="sc">|&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(sigla_partido, porcentagem, <span class="at">FUN=</span>median)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                      , <span class="at">y=</span>porcentagem))<span class="sc">+</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()<span class="sc">+</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Partidos&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Porcentagem de Votos&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">filter</span>(dados,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>              turno<span class="sc">==</span><span class="dv">1</span>)<span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(id_municipio)<span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(sigla_partido, porcentagem, <span class="at">FUN=</span>median)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                      , <span class="at">y=</span>porcentagem))<span class="sc">+</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()<span class="sc">+</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Partidos&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Porcentagem de Votos&quot;</span>)</span></code></pre></div>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAMAAABNUi8GAAAA9lBMVEUAAAAAADoAAGYAOpAAZrYzMzM6AAA6ADo6AGY6Ojo6kNtNTU1NTW5NTY5NbqtNjshmAABmADpmtv9uTU1uTW5uTY5ubo5ubqtujqtujshuq+SOTU2OTW6OTY6Obk2Obm6ObquOjm6Ojo6OjsiOyP+QOgCQkDqQkGaQtpCQ27aQ2/+rbk2rbm6rbo6rjqurq46ryKur5Mir5OSr5P+2ZgC22/+2///Ijk3Ijm7IyI7I5KvI/+TI///bkDrb/9vb///kq27kq47k5Kvk/8jk/+Tk///r6+v/tmb/yI7/25D/27b/29v/5Kv//7b//8j//9v//+T///+FemH2AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAZuElEQVR4nO2dC38b13HFKZlSUkIiFYmOWlJuUhdsU1FOnIIVG5es0bQUoRYksd//y3Tv3TewAPYxu/fM+MzPFglwdXAO5q+7L2F0ELFYwHUQ2gCLtasIKAu6CCgLuggoC7oIKAu6CCgLuoYD9MvW2vGjpgUhAWHCag4CarSxWk0QUHkJCBNWcxBQo43VaoKAyktAmLCag4AabaxWEwRUXgLChNUcBNRWY1+IV5gcxUMCCqAgCGir3rzYvzkBlUwTRgLCBAHtWmOmCSMBYYKAdq0x04SRgDBBQLvWmGnCSECYIKBda8w0YSQgTBDQrjVmmjASECYIaNcaM00YCQgTBHR7Ld9N4jqLosfzyeT1TbT89qb00zHThJGAMEFAt5cH8vHD7PF8GkXz4zuDgG7eUSndZUHKQUBrygO5upxmoNoDdPOeX/k+IFIOAlpTHsjl6Wx1eXyXP07fgAZvgYJ6sREkBXTX9mGqZa5m0QFc9z8GjXfv0WIyeTUzeAzq38TNZ7iCDpajeJhW7xU0f3BqcBfPY9CxcxQP05IAdHHifr2eGgQU3wQB3V4ZkP4s3uRJkgITBHR75UC666DuGNQfk56kPx0zTRgJCBMEtGuNmSaMBIQJAtq1xkwTRgLCBAHtWmOmCSMBYYKAdq0x04SRgDBBQLvWmGnCSECYIKBda8w0YSQgTBDQrjVmmjASECYyQMUrTI7iIQEFUMCQgDBBQOUlIExYzUFAjTZWqwkCKi8BYcJqDgJqtLFaTRBQeQkIE1ZzEFCjjdVqgoDKS0CYsJrDDqCBLk2L5wgnAWHCMKA7PLT6sCMBRZLIukJAi417mBDIEU4CwgQB3VsEFEki6woBLTbuYUIgRzgJCBMEdG8RUCSJrCsEtNi4hwmBHOEkIEwQ0L1FQJEksq4Q0GLjHiYEcoSTgDAxJKDpINvVpfsySSbdEVA9EhAmBgU0nQ9aHSc2VhqVgGa3rrL7V6Wvaze1Ko/qbndtunBbtbkx9ssAdHU5JaBNa/0Oa+VrhdDKo9obshsuWt+6/WUAujwtraDu7ekg1O0W+k7BwV+9f2UvXbFQNVV+0DxHi+y4JXcM6gbZcgVtVhVAv3AFrZHIuiK2gq59R0B3VkbQCx6DbpHIukJAi417mBDIEU4CwgQB3VsEFEki6woBLTbuYUIgRzgJCBO8k7S3CCiSRNYVAlps3MOEQI5wEhAmCOjeIqBIEllXCGixcQ8TAjnCSUCYIKB7i4AiSWRdIaDFxj1MCOQIJwFhwjCgYtXDhECOcBIQJuwCGk4CwoTVHATUaGO1miCg8hIQJqzmIKBGG6vVBAGVl4AwYTUHATXaWK0mCKi8BIQJqzl0AypxVdNoY7WaMAZo9aXqbhgRUF0mCKi8C8jGajVBQOVdQDZWqwkCKu8CsrFaTRBQeReQjdVqgoDKu4BsrFYTBFTeBWRjtZogoPIuIBur1YQcoOk00Ch6PJ9MXt8Uk5mKEU0EVJUEhAlBQNNpoI/nMYvz47vkcfygGHKnGNDNm1Hpd/kzxeSj6Mu2OUgvSqPAOphoVQS0DtDV5TQDNZkmsnyfkLr6pBrQzdul68+UfhZtmyRX3bK1iXZFQOsAjRfK1WUy7DsBNCM1BjXqPB80pa1Brf+WjjIbspsvs3WL6qtsvnZU+yNWy+p6DOoONReTyatZCmi8ciY/yEbUcwWt/VETE+2KK+g6oKUBYW4lra6gfhK4XkB5DIoi0R/QxYn79To5Fo0W6dlS/IRqQNsUZGO1mpAH1J/FZwtnfhbv/7EPAqpKAsLEALt4dx3UHYPyOqhyCQgTvJMk7wKysVpNEFB5F5CN1WqCgMq7gGysVhMEVN4FZGO1miCg8i4gG6vVBAGVdwHZWK0mjAHaoPZpGG2sVhO2AMWQgDBhNQcBNdpYrSYIqLwEhAmrOQio0cZqNUFA5SUgTFjNQUCNNlarCQIqLwFhwmoOeEB3X9yEeE8hTFjNgQ9oplO+TURAh5CAMEFAO7kYWAFDAsIEAe3kYmAFDAkIEwS0k4uBFTAkIEwQ0E4uBlbAkIAwQUA7uRhYAUMCwgQB7eRiYAUMCQgTBLSTi4EVMCQgTBDQTi4GVsCQgDAxAKDZJNtsYMPqclKeHtYzDQEdTQLCxBCAlgeE+kE4lcFiPdO0B7RyR7QY39XLxc6CbKxWE0MBmk2yTQaDhgS05sb9zg8nGW2sVhNDAVqev1gA6rhoJrL9Q2+1gLaqqCrE0li9j0GnxQRbrqA6JSBMDLWCRqUZ4DwG1SkBYWJwQBfHgY9B25bRxmo1MTSgAGfxLctoY7WaGBLQYnAtAdUoAWGCd5I6uRhYAUMCwgQB7eRiYAUMCQgTBLSTi4EVMCQgTBDQTi4GVsCQgDBBQDu5GFgBQwLCBAHt5GJgBQwJCBP6AK2tVhK7y2hjtZpQB2irNGEkIExYzUFAjTZWqwkCKi8BYcJqDgJqtLFaTRBQeQkIE1ZzEFCjjdVqgoDKS0CYsJoDCNC665wt03Qpo43VagIZ0Ci/XURAQ0hAmCCg8hIQJqzmIKBGG6vVBAGVl4AwYTUHATXaWK0mCKi8BIQJqzkIqNHGajVBQOUlIExYzdEZ0OW7fELDPB0L6p94f5c+JqDaJCBMCAL6+iYBdH58Fz2en0Xzs/jp+JfssSCgxaClF5UnMN5TCBNWc3QH9Nu/nHhAH7+7SZZSt3iuPs3yx3KAbnzaI/8W4j2FMGE1Rw9Ab679yEU/Lczt4N3gxRjS/HG0fz7o2hzPAtAdVfp5W88svdUF0Mff3zlAT/zjmNa5380Xj5Nq/GeFK2hgCQgTkitojGMOqFsxl+//J15Ei8digPIYdBQJCBOigK4+/Vg6Bo1WP/wUH4YOcAzaWKJLGW2sVhOigCan8vP4/+Ssff69/zV/TEBVSUCYkAXUwxgt8rGgpzP3ZcHroColIEzwTpK8BIQJqzkIqNHGajVBQOUlIExYzUFAjTZWqwkCKi8BYcJqDgJqtLFaTSADys/Fh5WAMAEMqECaMBIQJqzmIKBGG6vVBAGVl4AwYTUHATXaWK0mCKi8BIQJqzkIqNHGajVBQOUlIExYzREe0DaXPfelCSMBYcJqDgRAm9842pcmjASECas5CKjRxmo1QUDlJSBMWM1BQI02VqsJAiovAWHCag4CarSxWk0QUHkJCBNWcxBQo43VakIc0OU7N+rm+vXN8t0k+Tx8/g0B1SUBYUIe0NO/vYsef/ftjZ/k8Hg+TWeOJDMcGgNa/bv0jW8uQbynECas5ugP6Lf/MIuW36eAuvmL/hs3i7EFoNVPezT/1AfEewphwmoOAUD/Mo3+68cM0McPs2QFfe+mhDabD1odB5o93dUQy2T1APSnv1v98FMGaLxyJsegfoytq31/VriCokhAmBhgBf2PP/73Py7XV9Dm80F5DIoiAWFiAEBv/v1PZzmgi+PkGLT5hGWexaNIQJgYAtDFq9ly/Sw+XkkJqDIJCBNDAJr+x+ugyiUgTPBOkrwEhAmrOWoBfXjz9uHNwfPPBFSPCas5agG9Ooxun3++PSSgekxYzVEHaLyAPl0cRvcyS+g+KwQURQLCRENAH94cEVBVJqzmqAP06eLo/tlHt6MnoGpMWM1RB2j09eXBYXT1zc8EVI8JqzlqARWtfVY4uAFFAsIEHqCSacJIQJiwmqMe0NuDuI4IqCITVnPUAnrrzt/diTwBVWPCao46QB/evHVfRrrMJJkmjASECas5CKjRxmo1wV28vASECas5agHlSZI+E1Zz1AMqWTuttPpXu/anCSMBYcJqjvCA9riPBPKeQpiwmmMD0Ic3B1mNcJJEQIEkIEy0OUl6K8EnAVUjAWEC7DITAQWSgDBBQOUlIExYzVEH6IjXQQkokASEiWZn8ffuHEnmEJSAqpGAMMHLTPISECas5tgPaDKH4SxKpoWsLid+NNhf/bOvb5I5InM/qSH72V1prggB1SMBYaLBddC32aXQ5CSpmGSz+P4sfyIZwDRPJjHNHZPnZ9nP8i2bA1oebtfm3hLEewphwmqOBitoNqxu9enPv7+rApoMvXn87qb6dLZlY0BfrFfHNF3KaGO1mmh/mSmf6L18f+dH1m2soAs/C9QPXMzHLCfD7fYMoq0ZX1tMsWWxSrUD0GwW2PwsWrh/MCEBNJtS6wA98b/tOgc029LXzj8rXEGBJCBM7F9Bb/N78cnn4tPDyuQU6PVNaQVdvJpFBaDFCppv2RhQHoMiSECYaLGLTysD1E+dz1fJ5OQ9OYtfPwbNt2wOqFCaMBIQJqzmqAP06aIO0Lkjzi2WBYmryxP/jQO1dBafb0lAVUlAmOi8gq5+SEfQV87i3535bxbZxFr3qNiSgKqSgDDR7F680NQbAqpKAsJEsxWUf2FZnQmrOeoAla2dVggokASECQIqLwFhwmqOWkC/vuQuXpsJqznqAH26OHq6eMvPJKkyYTVHHaAOzauj6F7mXH6nFX4uHkgCwkRTQG9H+0cUJNOEkYAwYTVHHaBuOn1Mp9DV0DHThJGAMGE1Ry2g8UFodHXw7KMEnwRUjQSECbDLTMJpwkhAmLCag4AabaxWEw0AvZK6AkpAdUlAmNgPqPv3kW4FCR0zTRgJCBNWc2wA6v8yaPVvhA4IaM/LoBjvKYQJqzk2APU3kNxp/EiA9rqRhPGeQpiwmoOAGm2sVhMEVF4CwoTVHATUaGO1mmgA6LgjwAkojASECbAL9QQUSALCBAGVl4AwYTUHATXaWK0mxAAtxoYmw0GLGU7JN6+yCaE7rRBQIAkIE3KAZmNDs+GgyRPn03wUSXNANweHNb3BBPGeQpiwmqMfoKvLaT6YKZ+82BrQzdF2jT8JAvGeQpiwmqMfoMvTWT4cNOEyXlNLgDaYD1ozHjQbHMpi5dXxGHQa5cNBs+HKs3x0aFI7/6xwBQWSgDAhu4JG2RS7LStoM0B5DIohAWFCHNC1Y9DFcftjULk0YSQgTFjN0RvQfDhoj7N4sTRhJCBMWM3RH9BsOOjaddBJwwnLBBRGAsIE7yTJS0CYsJqDgBptrFYTBFReAsKE1RwE1GhjtZogoPISECas5iCgRhur1QQcoPxcPIwEhAkwQIXThJGAMGE1BwE12litJgiovASECas5CKjRxmo1QUDlJSBMWM1BQI02VqsJAiovAWHCag4CarSxWk2AAdrzOj3GewphwmoOAmq0sVpNEFB5CQgTVnMQUKON1WqCgMpLQJiwmoOAGm2sVhMEVF4CwoTVHATUaGO1miCg8hIQJqzm6AxoMp7h9U0+r7bjAFsCCiMBYUIOUD9ZZF6MYuo4+sYB2niY3b40YSQgTFjN0RPQfGhY/kTbAbbFcDuBNGEkIExYzdET0PUVtNUA2425tSzWtup4DHp8l3/TcYAtV1AYCQgToivowp0J7VpBmwHKY1AMCQgTsrt4Nxu0CmjrAbY8i4eRgDAhC+jq8iQSOIsXSxNGAsKE1Rz9AI0PQM+yebUdB9gSUBgJCBO8kyQvAWHCag4CarSxWk0QUHkJCBNWcxBQo43VaoKAyktAmLCag4AabaxWEwRUXgLChNUcgQEVThNGAsKE1RwE1GhjtZogoPISECas5iCgRhur1QQBlZeAMGE1BwE12litJgiovASECas5ggLa9yooyHsKYcJqDgJqtLFaTRBQeQkIE1ZzEFCjjdVqgoDKS0CYsJqDgBptrFYTBFReAsKE1RwE1GhjtZogoPISECas5ugBaPL59zM3rcEPCo2iefrB+Mrkhh1WCCiUBIQJSUD9KJEPMzdNxI258/8/np+1A7Q03q5/mi5ltLFaTUgDurqc5qB+tzYxtAmgleqdpksZbaxWE9KALk9nq8tk1OLCf8mI9dVqPignhLK2V+djUDeCaeFH0i9O/NPXU66gOiUgTEivoPmD01kCaGUF3Q8oj0FxJCBMDABoAub1tNMxqGyaMBIQJqzmEADUn8XHJ0l+nG3rs3jRNGEkIExYzSEAqL8O6v9ZpEV5QOgJAVUmAWGCd5LkJSBMWM1BQI02VqsJAiovAWHCag4CarSxWk0QUHkJCBNWcxBQo43VagIK0C8EFEkCwgQWoNJpwkhAmLCag4AabaxWEwRUXgLChNUcBNRoY7WaIKDyEhAmrOYgoEYbq9UEAZWXgDBhNUdAQPtfpgd5TyFMWM1BQI02VqsJAiovAWHCag4CarSxWk0QUHkJCBNWcxBQo43VaoKAyktAmLCag4AabaxWEwRUXgLChNUcBNRoY7WaGAzQYpSYn9+QDLwjoJokIEwMB6ifEupn2bppy9c5oVuddJwXtitNGAkIE1ZzyAIaLd/fuSlNfshdE0D5mSQgCQgTAwMa07ko9u67B9hyZi2reQkBuvqUjgktausfFa6gYBIQJoZfQeO9fHNAhdOEkYAwYTWHMKDx/r3NMah0mjASECas5pAFtO1ZvHSaMBIQJqzmkAOU10G1S0CY4J0keQkIE1ZzEFCjjdVqgoDKS0CYsJqDgBptrFYTBFReAsKE1RwE1GhjtZoAArT/+FqQ9xTChNUcIQGFfEO0mrCag4AabaxWEwRUXgLChNUcBNRoY7WaIKDyEhAmrOYgoEYbq9UEAZWXgDBhNUdAQAUug2K8pxAmrOYgoEYbq9UEAZWXgDBhNQcBNdpYrSYIqLwEhAmrOQio0cZqNUFA5SUgTFjNQUCNNlarCQIqLwFhwmqOHoAmn4Q/c+MaJpPXN6tL93By/NdkzJ3/lYBqkoAwIQmonyXyYZaME3GTGvwzy+aAcngYlASECWlAV5fTDNROgPYkFOI9hTBhNUdfQJens9VlNudmA9D980E5IJTVqDofg7ppTIvJ5JUbaccVVLUEhAnpFTR/cNptFy+bJowEhAmrOQQATUYqX0+L06bID6vfD6h4mjASECas5hAA1J/FFydJ0fWJO3c6yzbb6oSAgklAmBhiF++ugxbHoDGhyeVRAqpMAsIE7yTJS0CYsJqDgBptrFYTBFReAsKE1RwE1GhjtZogoPISECas5iCgRhur1QQQoF8IKJYEhAkkQCHfEK0mrOYgoEYbq9UEAZWXgDBhNQcBNdpYrSYIqLwEhAmrOQio0cZqNUFA5SUgTFjNERBQXqgHk4AwQUDlJSBMWM1BQI02VqsJAiovAWHCag4CarSxWk0QUHkJCBNWcxBQo43VaoKAyktAmLCag4AabaxWEwRUXgLChNUcEoBmk2zzr+WhTQRUjQSEiUEATUcyVb42AbQ/ohDvKYQJqznEAM0m2WZfmwHK6XZAEhAmBgN0eTqrfPW1f4Btj5dl/ZKq/zHotPjKFVSlBISJwVbQmq8NABVOE0YCwoTVHEEBFU8TRgLChNUcBNRoY7WaGAVQfyx6QkCVSUCY4J0keQkIE1ZzEFCjjdVqgoDKS0CYsJqDgBptrFYTBFReAsKE1RwE1GhjtZoAApQDbMEkIEwgAQr5hmg1YTUHATXaWK0mCKi8BIQJqzkIqNHGajVBQOUlIExYzUFAjTZWq4nxAd1eGJ/3gHBBE3ltcUFAgxZN5EVA1wrCBU3kRUDXCsIFTeQFBCiL1bgIKAu6CCgLuggoC7oIKAu6Rgf08XxyfDf2i65XMo8vqBP3Ge1paBOLyeR18Hci8pPntrkYG1BnZX6yf7tBa+HaEtbJ44eZm7cW1oT7cxq/eviezOM/q1tcjA3o43c3axNIxq/rVz/GDsI6WbhWXE/Dvx3xqwc3sfzt30+39WNsQJfv7/zqEbbcGxHeiZv5G9xEvGiFNrH69K/x6rnFxdiALo5Dd8SVAzS4k9XlWXATy3evZsFNzM/c7n2LC66goerx/Azh7Qi/jMcvv8JZQYMf7/haBj8Gjdeu+MQ1tAlXwQ+E5xP/b3CAHIO6/Vrws3j/RoR1kvAZ2ES6Vw3fE7eCbnHB66BhKlk2poHfjthFfAwavidA10FZrFZFQFnQRUBZ0EVAWdBFQFnQRUBZ0EVAW9XTxYGrZx8bbv+//9byBe6ff6683KH/envYXVF5EdBW9XRx5L7cVjDaXl9/1ZTkrKqApi/0dPG2u6LyIqCtKgX04c3bfVv66g1oIvD115+rT/yCioC2qhKgbm9/6OD5p4Pnn9MH/skYsa+/+sPLg4O3X+NfjiL3a/wl/k0Hz/4Qo1bZ5sj9NKXdbfDPz/MNfF2513N7+OQVEsXs1bxysz8qaouAtqoU0CuH5KE/RPz68jA5VkygjR/cfvPz15ff/Ox2z26986tt/P3Dm6P4++Q3FtscJBs60fUN/Avex1/dHj5/uVix/H38+rYJJaCtKj1Jiony++L4Fw9ItuP1T8ZEZk+65//PkRZ/438Ws1jdpvS71zfwig+/+ej38PnLxdvm3/+62ZGw6iKgrSpdQaNkacsYzI8cbz2+8X7br23pD6N7f97v18SYqfVtckDXN0heJ97Huz18+eWy76OrZE9vughoq9oHaLpjLgP68ObZR/d9zt/aNpuAphtkr/Of7hy+FlB/2NrwgoLWIqCtqgTos4/5PrfYxacXSMuAepziH2Q75vVtqrv40gZJPfzGnVhVXi77Pvl5wwsKWouAtqoC0MqZSvbg6SKmMeYn487R43D6+vLZx+IcqLpNDujDm8PKBukLXf3NYenlslMx979n1Pp1JwLaqgpA88tMHpDyZaZkj54dJR66I8Vn/xJzVb6KVN4mZ2xtg7TukwtJ2Ss4xez7+zY3tZQWAR217ivHl6z9RUDHKrfTzu6tsxoXAR2t3OUj8tm2CCgLuggoC7oIKAu6CCgLuggoC7oIKAu6CCgLuv4fa39ziBOob1UAAAAASUVORK5CYII=" /><!-- --></p>
 </div>
 <div id="o-idhm-e-sua-relação-com-a-votação" class="section level2">
 <h2>O IDHM e sua relação com a votação</h2>
 <p>Como forma de trabalhar com mais de uma tabela ao mesmo tempo e realizar análises exploratórias que relacionam-se, é necessário ter em mente que um atributo ou mais que estejam presente nas tabelas sejam iguais. Assim, realizei um join (utilizando a biblioteca do dplyr) da tabela do IDHM disponível no site da <a href="https://www.br.undp.org/content/brazil/pt/home/idh0/rankings/idhm-municipios-2010.html">PNUD Brasil</a> com a Id dos municipios de São Paulo. Porém, é necessário alterar o nome da variável ‘Cod.IBGE’ para ‘id_municipio’ para realizar o Join. Essa alteração deixei no script de manipulação dos dados <a href="https://github.com/gustavoalcantara/bd_eleicoes/blob/master/script_de_testes.R">aqui</a>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(idhm)</span></code></pre></div>
-<pre><code>## Rows: 645
-## Columns: 4
-## $ X            &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17~
-## $ id_municipio &lt;int&gt; 3500105, 3500204, 3500303, 3500402, 3500501, 3500550, 350~
-## $ Município    &lt;chr&gt; &quot;Adamantina&quot;, &quot;Adolfo&quot;, &quot;Aguaí&quot;, &quot;Águas da Prata&quot;, &quot;Águas~
-## $ idhm_2010    &lt;dbl&gt; 0.790, 0.730, 0.715, 0.781, 0.745, 0.757, 0.854, 0.745, 0~</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">X</th>
+<th align="right">id_municipio</th>
+<th align="left">Município</th>
+<th align="right">idhm_2010</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3500105</td>
+<td align="left">Adamantina</td>
+<td align="right">0.790</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">3500204</td>
+<td align="left">Adolfo</td>
+<td align="right">0.730</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">3500303</td>
+<td align="left">Aguaí</td>
+<td align="right">0.715</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">3500402</td>
+<td align="left">Águas da Prata</td>
+<td align="right">0.781</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">3500501</td>
+<td align="left">Águas de Lindóia</td>
+<td align="right">0.745</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">3500550</td>
+<td align="left">Águas de Santa Bárbara</td>
+<td align="right">0.757</td>
+</tr>
+</tbody>
+</table>
 <div id="join-das-tabelas" class="section level3">
 <h3>Join das tabelas</h3>
 <p>É necessário realizar a união dos dois dataframes. Para isso vou utilizar a função left_join() do dplyr.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(dadoseidhm)</span></code></pre></div>
-<pre><code>## Rows: 9,675
-## Columns: 11
-## $ ano           &lt;int&gt; 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 20~
-## $ turno         &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,~
-## $ sigla_uf      &lt;chr&gt; &quot;SP&quot;, &quot;SP&quot;, &quot;SP&quot;, &quot;SP&quot;, &quot;SP&quot;, &quot;SP&quot;, &quot;SP&quot;, &quot;SP&quot;, &quot;SP&quot;, &quot;S~
-## $ sigla_partido &lt;chr&gt; &quot;MDB&quot;, &quot;PATRIOTA&quot;, &quot;PDT&quot;, &quot;PPL&quot;, &quot;PSOL&quot;, &quot;PDT&quot;, &quot;PDT&quot;, &quot;~
-## $ id_municipio  &lt;int&gt; 3501103, 3501103, 3501103, 3501103, 3501103, 3501152, 35~
-## $ votos         &lt;int&gt; 35, 13, 115, 2, 4, 994, 146, 397, 869, 4, 6, 13, 528, 9,~
-## $ resultado     &lt;chr&gt; &quot;nao eleito&quot;, &quot;nao eleito&quot;, &quot;nao eleito&quot;, &quot;nao eleito&quot;, ~
-## $ cargo         &lt;chr&gt; &quot;presidente&quot;, &quot;presidente&quot;, &quot;presidente&quot;, &quot;presidente&quot;, ~
-## $ porcentagem   &lt;dbl&gt; 0.69624030, 0.25860354, 2.28764671, 0.03978516, 0.079570~
-## $ Município     &lt;chr&gt; &quot;Alto Alegre&quot;, &quot;Alto Alegre&quot;, &quot;Alto Alegre&quot;, &quot;Alto Alegr~
-## $ idhm_2010     &lt;dbl&gt; 0.700, 0.700, 0.700, 0.700, 0.700, 0.766, 0.728, 0.728, ~</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(dadoseidhm))</span></code></pre></div>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="5%" />
+<col width="8%" />
+<col width="12%" />
+<col width="11%" />
+<col width="5%" />
+<col width="10%" />
+<col width="10%" />
+<col width="11%" />
+<col width="11%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">ano</th>
+<th align="right">turno</th>
+<th align="left">sigla_uf</th>
+<th align="left">sigla_partido</th>
+<th align="right">id_municipio</th>
+<th align="right">votos</th>
+<th align="left">resultado</th>
+<th align="left">cargo</th>
+<th align="right">porcentagem</th>
+<th align="left">Município</th>
+<th align="right">idhm_2010</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">MDB</td>
+<td align="right">3501103</td>
+<td align="right">35</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">0.6962403</td>
+<td align="left">Alto Alegre</td>
+<td align="right">0.700</td>
+</tr>
+<tr class="even">
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PATRIOTA</td>
+<td align="right">3501103</td>
+<td align="right">13</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">0.2586035</td>
+<td align="left">Alto Alegre</td>
+<td align="right">0.700</td>
+</tr>
+<tr class="odd">
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PDT</td>
+<td align="right">3501103</td>
+<td align="right">115</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">2.2876467</td>
+<td align="left">Alto Alegre</td>
+<td align="right">0.700</td>
+</tr>
+<tr class="even">
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PPL</td>
+<td align="right">3501103</td>
+<td align="right">2</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">0.0397852</td>
+<td align="left">Alto Alegre</td>
+<td align="right">0.700</td>
+</tr>
+<tr class="odd">
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PSOL</td>
+<td align="right">3501103</td>
+<td align="right">4</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">0.0795703</td>
+<td align="left">Alto Alegre</td>
+<td align="right">0.700</td>
+</tr>
+<tr class="even">
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PDT</td>
+<td align="right">3501152</td>
+<td align="right">994</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">5.0771274</td>
+<td align="left">Alumínio</td>
+<td align="right">0.766</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="análise-do-idhm-com-a-porcentagem-de-voto" class="section level2">
@@ -208,46 +424,145 @@ a.sourceLine {
 <p>Índices são úteis para avaliar e compreender contextos diversos. É válido afirmar que o estudo do Índice de Desenvolvimento Humano Municipal é referencial de uma série de artigos, livros e discussões que relacionam-o com outras variáveis. Aqui propus relacioná-lo com a votação dos partidos nos municipios.Para isso, é necessário classificar o IDHM que varia de Muito Baixo até Muito Alto. Os municipios de São Paulo, em 2010, variam entre IDHM’s Médio à muito alto, <a href="https://www.br.undp.org/content/brazil/pt/home/idh0/conceitos/o-que-e-o-idhm.html">veja Mais aqui</a>. Assim, classifiquei o IDHM dos municipios paulsitas de acordo com a regra abaixo e elaborei um gráfico simples para visualizar a relação entre os votos nos candidatos e o IDHM dos municípios.</p>
 <div id="classificação-do-idhm" class="section level3">
 <h3>Classificação do IDHM</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">mutate</span>(dadoseidhm,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">classificacao_idhm=</span><span class="fu">case_when</span>(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                idhm_2010<span class="sc">&lt;=</span><span class="fl">0.699</span><span class="sc">~</span><span class="st">&#39;Medio&#39;</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    idhm_2010<span class="sc">&gt;=</span><span class="fl">0.700</span> <span class="sc">&amp;</span> idhm_2010<span class="sc">&lt;</span><span class="fl">0.799</span><span class="sc">~</span><span class="st">&#39;Alto&#39;</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    idhm_2010<span class="sc">&gt;=</span><span class="fl">0.800</span><span class="sc">~</span><span class="st">&#39;Muito Alto&#39;</span>)) <span class="ot">-&gt;</span> dadoseidhm</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">mutate</span>(dadoseidhm,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">classificacao_idhm=</span><span class="fu">case_when</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                idhm_2010<span class="sc">&lt;=</span><span class="fl">0.699</span><span class="sc">~</span><span class="st">&#39;Medio&#39;</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    idhm_2010<span class="sc">&gt;=</span><span class="fl">0.700</span> <span class="sc">&amp;</span> idhm_2010<span class="sc">&lt;</span><span class="fl">0.799</span><span class="sc">~</span><span class="st">&#39;Alto&#39;</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    idhm_2010<span class="sc">&gt;=</span><span class="fl">0.800</span><span class="sc">~</span><span class="st">&#39;Muito Alto&#39;</span>)) <span class="ot">-&gt;</span> dadoseidhm</span></code></pre></div>
+<table>
+<colgroup>
+<col width="3%" />
+<col width="4%" />
+<col width="7%" />
+<col width="10%" />
+<col width="10%" />
+<col width="4%" />
+<col width="8%" />
+<col width="8%" />
+<col width="9%" />
+<col width="9%" />
+<col width="7%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">ano</th>
+<th align="right">turno</th>
+<th align="left">sigla_uf</th>
+<th align="left">sigla_partido</th>
+<th align="right">id_municipio</th>
+<th align="right">votos</th>
+<th align="left">resultado</th>
+<th align="left">cargo</th>
+<th align="right">porcentagem</th>
+<th align="left">Município</th>
+<th align="right">idhm_2010</th>
+<th align="left">classificacao_idhm</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">MDB</td>
+<td align="right">3501103</td>
+<td align="right">35</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">0.6962403</td>
+<td align="left">Alto Alegre</td>
+<td align="right">0.700</td>
+<td align="left">Alto</td>
+</tr>
+<tr class="even">
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PATRIOTA</td>
+<td align="right">3501103</td>
+<td align="right">13</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">0.2586035</td>
+<td align="left">Alto Alegre</td>
+<td align="right">0.700</td>
+<td align="left">Alto</td>
+</tr>
+<tr class="odd">
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PDT</td>
+<td align="right">3501103</td>
+<td align="right">115</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">2.2876467</td>
+<td align="left">Alto Alegre</td>
+<td align="right">0.700</td>
+<td align="left">Alto</td>
+</tr>
+<tr class="even">
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PPL</td>
+<td align="right">3501103</td>
+<td align="right">2</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">0.0397852</td>
+<td align="left">Alto Alegre</td>
+<td align="right">0.700</td>
+<td align="left">Alto</td>
+</tr>
+<tr class="odd">
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PSOL</td>
+<td align="right">3501103</td>
+<td align="right">4</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">0.0795703</td>
+<td align="left">Alto Alegre</td>
+<td align="right">0.700</td>
+<td align="left">Alto</td>
+</tr>
+<tr class="even">
+<td align="right">2018</td>
+<td align="right">1</td>
+<td align="left">SP</td>
+<td align="left">PDT</td>
+<td align="right">3501152</td>
+<td align="right">994</td>
+<td align="left">nao eleito</td>
+<td align="left">presidente</td>
+<td align="right">5.0771274</td>
+<td align="left">Alumínio</td>
+<td align="right">0.766</td>
+<td align="left">Alto</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="gráficos" class="section level3">
-<h3>Gráficos</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">filter</span>(dadoseidhm,</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>              turno<span class="sc">==</span><span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(id_municipio)<span class="sc">|&gt;</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(sigla_partido, porcentagem, </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">FUN=</span>median), <span class="at">y=</span>porcentagem,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill=</span>classificacao_idhm))<span class="sc">+</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name=</span><span class="st">&#39;IDHM&#39;</span>,<span class="at">breaks=</span><span class="fu">c</span>(<span class="st">&#39;Medio&#39;</span>, <span class="st">&#39;Alto&#39;</span>, <span class="st">&#39;Muito Alto&#39;</span>))<span class="sc">+</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()<span class="sc">+</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Votação Presidencial em SP no 1º Turno e IDHM (2010)&quot;</span>,</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="st">&quot;Partidos&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Porcentagem de Votos&quot;</span>)</span></code></pre></div>
+<div id="gráficos-e-possíveis-análises" class="section level3">
+<h3>Gráficos e Possíveis Análises</h3>
+<div id="boxplot-e-relação-com-o-idhm-por-partidos-no-1º-turno" class="section level4">
+<h4>BoxPlot e relação com o IDHM por partidos no 1º Turno</h4>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
-<div id="º-turno" class="section level3">
-<h3>2º Turno</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">filter</span>(dadoseidhm,</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>              turno<span class="sc">==</span><span class="dv">2</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(id_municipio)<span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(sigla_partido, porcentagem, </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">FUN=</span>median), <span class="at">y=</span>porcentagem,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill=</span>classificacao_idhm))<span class="sc">+</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name=</span><span class="st">&#39;IDHM&#39;</span>,<span class="at">breaks=</span><span class="fu">c</span>(<span class="st">&#39;Medio&#39;</span>, <span class="st">&#39;Alto&#39;</span>, <span class="st">&#39;Muito Alto&#39;</span>))<span class="sc">+</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()<span class="sc">+</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Votação Presidencial em SP no 2º Turno e IDHM (2010)&quot;</span>,</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="st">&quot;Partidos&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Porcentagem de Votos&quot;</span>)</span></code></pre></div>
+<div id="º-turno" class="section level4">
+<h4>2º Turno</h4>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAMAAABNUi8GAAABZVBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZpAAZrYAujgzMzM6AAA6ADo6AGY6OgA6Ojo6OmY6OpA6ZmY6ZpA6ZrY6kJA6kLY6kNtNTU1NTW5NTY5NbqtNjshhnP9mAABmADpmAGZmOgBmOjpmOmZmOpBmZjpmZmZmZrZmkJBmkLZmkNtmtpBmtrZmtttmtv9uTU1uTW5uTY5ubo5ubqtuq+SOTU2OTW6OTY6Obk2OyP+QOgCQOjqQOmaQZgCQZjqQZmaQZpCQZraQkDqQkGaQkLaQtpCQtraQttuQ27aQ2/+rbk2rbm6ryKur5OSr5P+2ZgC2Zjq2kDq2kGa2tma2tpC2ttu225C229u22/+2/7a2/9u2///Ijk3I///bkDrbkGbbtmbbtpDb27bb29vb2//b/7bb/9vb///kq27k///r6+vy8vL4dm3/tmb/yI7/25D/27b/29v/5Kv//7b//8j//9v//+T///+UbxMfAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAbZklEQVR4nO2dC5six3mFmdFu8KB1bEsxI8seXWIrjhMhOZGU7PiSxIoij5IscuLIisfCKyf26GKEsizbvz9V1Xco4Gv4qqaYec8jLdD06VNdvNSloYZehlDC6l13ARDaJABFSQtAUdICUJS0ABQlLQBFSQtAUdKKBOjspaNX52ejOGHoBmlHQOdnd6/cncX58WW9efbnl/79xz2jo4uV7ZOe0513N2Qtzossc6+/uVj1rquPNrj+46u93lN/eSUsT6GPjenOh5l98/XuFGc2P+sVOl5TEYLS2FIX5fiaPX42KQ42PxuamvxaWbaPXx5WpvkLF40SZV++VHqNxnmlVdvGte0AtGsLOunlzeH8rMnMZM3rYqr2y5/2nvUdptCGxjU0oIvzvAh2Z0l5ck17xXtuNhhmk+K9pw1oXo42oOX7fDboDSuTha4qUVGMwjXp9eui2W2zp1cbinS1K6CzQc7KtPVSrgN0rQrDw54QpS2ALu8uOuq0d9c0LF+e2zMRl2dxfvRutviFefGtxaHTLXXDkS2grhyL3w4sb21Aj76aZ02eGlShU7NHXSLD5DevzD379OL9Xg5oY9u4Uy1es3Yeg47zWnM3tvcwfYtriobm5TVdzdEP7LMPB0XvV28q9i1U1r05jKFv0jv+sO6KFj81nlfLV9we6lcO0HIHs/2XX20HFbsWYQ1USo9p7h4OzHPTQe+Z8rmi+XN9QaM87raZ0Sr5zNFhE9YBmt/a91R+Zr9ad6ilHrkBqH3zDJcBPf6ZO/7i/PsVoO6NW5eoTDb/zs+O/sr1cY1th9WE7gyoq7r8VTWvtutbCkAnVec0LfucxqZBazTaAvSpgWm4ZuUORc87avR5d15yL0R7h2ZQs3scNQCtPLPBN8zdo3fs437rTFbK426bGe2SF0+vb0GbgNoz+8PaQ81aD1uAth4UgH7g+Jrd+6ACdDYY1en9cthlz2H+T1f5o8a2rh3R9WpnQPP6nzoOeq9aBouqNNOmD/MhgOl0LkxvOWxtqvZ1qrpU99TQdZ1mh4/NrrPBs1eF566pZdN/mV6439jBGPpXbojVCLLtRx1WzeTqg5r8h/ZtNBtUzev7vaNv/Mv/LpencNYZ7ZLnu5vTb45B64ppA5qf2ZpD1aWr/dVYyRJVDUjtYcbHvz4f2if6swrQxsiqLFHW7hna28ZdR2LXqN0vM7lzndy9KoejY/O4qKn/+eU/DHr9rK7BxqZq3/wgRc271s+N4IuKPL6cDZ76/q/sffuK5Ztng35jh9xg678KKuAowipAmwftF5cgmkPF3/10kI8mmuUpDlhntEtulXPcmMU3ytACNG+31hyqLl3t3wTo5dj13aO6esfVqbgSbQV04rmekqp2B9R2OAv7Zi46mGkJaN5jORrLnmd503QJ0GJIeVVORR0h7tLUMx+6J/K5mH216x1qAqogt6kKqxisPe51yl+ycastXHz8shvu1eWpD9jMmNavrZl/+KZDPkDr8Z/nUI1TrnxtQNtd/KU1Tu2bbdhOLEu0FdDp9osUyWiPC/WmqtxwewnQ+VnvG//8X78/a3CzsqkGtO5sVgDNPjZzh55tKTsBWod1AXQZjFahvIDmHfeqVAH1jUEv7e14td+oSlSMiIuOvByDNrbdEkBNPU/yN2yri8+rv9EbZ61NS138MqCN8b7V737SG9Vd/LxJfesVH9ab6rBGF1835cNlQKvPHJqNVbtQeUa75GZU/Kq3WqrUcdmlrwK61MWPVvybZvGXdqI0GK0AWpWomVeebWvbLQF0cf4nPxm623qS5CbKZi7w5Us9O12xD88sM/Um7yQpP1xehWY2ZKZDpiPrfdOMFH+Rt5Su8hfFJKnYodlEFUE5oHVYPQ0pPL4WdGzHEdni4WBjC7pc8vG6cVwNaO8HZZHbgK5OkorS1f7qOqi9XQF0evQ91xIMi8j8VOoSje01z/eLBr6cvze23Y4xqH0j5idaXzUxQ7hh44OZaXW9p97kv8yUNd7dxXSgMBWcuc3uMlNjh/IVbwS590DTWJS08PgALT/+aV4Tbxcqz2iVvBjoej4xag8sbJGXAV2uhKp0tX/DJ0n5KKqeC2UFcI0StT5JKgBtbrsds/hG52jmsfl15/lLvf6Vuwr9rquEh4N8ctzYVO3rtAqo2+Epa3IX6p8t59tmQHrn1+f9xg6NV7wMcpuqsMZEvfR4x6Dus/gj24xuArRd8pKgDYBmvx30nvmDZwy6XAn1KVf+/PB5mVYBNc3hqAmoGyQ0S9T8IKD8MLredjuug8o0u3c479XDVUfibscnSTJNe3cgNLymnQaVt+OzeKGWpqgojLp8he6gGtDAgJrh/7N7fbUHyeS+DyrU7fg+KEJRBKAoaQEoSloAipIWgKKkBaAoae0K6Ger8m0TancrobGsqtjJBaCEyqyq2MkFoITKrKrYyQWghMqsqtjJBaCEyqyq2MkFoITKrKrYyQWghMqsqtjJBaCEyqyq2MkFoITKrKrYyQWghMqsqtjJBaCEyqyq2MkFoITKrKrYyQWghMqsqtjJBaCEyqyq2MkFoITKrKrYyQWghMqsqtjJBaCEyqyq2MkFoITKrKrYyQWghMqsqtjJBaCEyqyq2MkFoITKrKrYyQWghMqsqtjJBaCEyqyq2MkFoITKrKrYyQWghMqsqtjJBaCEyqyq2MkFoITKrKrYyQWghMqsqtjJBaCEyqyq2MkFoITKrKrYyQWghMqsqtjJBaCEyqyq2MkFoITKrKrYyQWghMqsqtjJBaCEyqyq2MkFoITKrKrYyQWghMqsqtjJBaCEyqyq2MkFoITKrKrYyQWghMqsqtjJBaCEyqyq2MkFoITKrKrYyQWghMqsqtjJBaCEyqyq2MkFoCmGnuyjQOVVxU4uAE0x9OQ7m3WyYYeTQOVVxU4uAE0xFEArAWiKoQBaCUBTDAXQSgCaYiiAVgLQFEMBtBKAphgKoJUANMVQAK0EoCmGAmglAE0xFEArAWiKoQBaCUBTDAXQSgCaYiiAVgLQFEMBtBKAphgKoJUANMVQAK0EoCmGAmglAE0xFEArAWiKoQBaCUCjOLuuK9oHUNk6pc6nqoqdXACaYigtaCUATTEUQCsBaIqhAFoJQFMMBdBKAJpiKIBWAtAUQwG0EoCmGAqglQA0xVAArQSgKYYCaCUATTEUQCsBaIqhAFoJQFMMBdBKAJpiKIBWAtAUQwG0EoCmGAqglQA0xVAArQSgKYYCaCUATTEUQCsBaIqhAFoJQFMMBdBKAJpiKD/kVQlACZVZVbGTC0AJlVlVsZMLQAmVWVWxkwtAlZx7DRslAtBOClUN8ZzagH6lo066OQC0m0JVQzwngHazqmInF4AqOQE0jABUyQmgYQSgSk4ADSMAVXICaBgBqJITQMMIQJWcABpGAKrkBNAwAlAlJ4CGEYAqOQE0jABUyQmgYQSgSk4ADSMAVXICaBgBqJITQMMIQJWcABpGAKrkBNAwWg/oo9dOjd7Issdvnp5+66Ps0Q8/ajwbqhriOQG0mzU8i15tANQC+fitB4/fvJ9lnzz/KYBudAJoGG0B9Ml790tQAXSjE0DDaAugj15/8OS95z+tHju5JVw3VrsuagsN6O6r7Q5a28agpnvPvjg9fe4BY9DNTlrQMNrSglYPXqeL3+wE0DDaDugX37b//uY+gG50AmgYbQfUzeKZJG1zAmgYCbp4ex3UjkHdmPTbxbOhqiGeE0C7WcOz6BWfJCk5ATSMAFTJCaBhBKBKTgANIwBVcgJoGAGokhNAwwhAlZwAGkYAquQE0DACUCUngIYRgCo5ATSMAFTJCaBhBKBKTgANIwBVcgJoGAGokhNAwwhAlZwAGkYAquQE0DACUCXn7ovapGvfruNMAXRfK6GxrKrYyQWghMqsqtjJBaCEyqyq2MkFoImE6gxUA5ZXFTu5ADSR0JM/SnSyebeTgOVVxU4uAE0kFED9AtBEQgHULwBNJBRA/QLQREIB1C8ATSQUQP0C0ERCAdQvAE0kFED9AtBEQgHULwBNJBRA/QLQREIB1C8ATSQUQP0C0ERCAdQvAE0kFED9AtBEQgHULwBNJBRA/QLQREIB1C8ATSQUQP26WYB6Fz2sbsy3ZBufXrt+YiW0kwC0o24UoN5lOasbiy3Zpqc3rPAB0JgCUDGgCmvaNkkFUA2tqV9V7OQCUP/T3kN5Q7uJFrSjbhSgn3mhWt14whi0e3lVsZPrZgF6wKEHCujs6YvFec+qbx7Nz0Z24/T4cjY4vnQb7l7tSFghAE0k9JABHZo7i3ODYhPQowv79ABAb0jooQPq4GwC+ordOnkFQG9I6MEDmk36LUD/+rtX2eJHbwPoDQk9fECnd6+agL7648ts9vWHAHpDQm8AoMeX8zM3X+pZQEeTUTYdTgH0hoTeAEDbLeho2s/GIwC9KaGHD+i4PQYdzb/7+xcvAfSmhB48oMuz+FH2/tv9DEBvSuihA7pyHXSUTXpDAL0xoYcMqJsYDbNsCVDzHIDemNADBTS4ADSRUAD1C0ATCQVQvwA0kVAA9QtAEwkFUL8ANJFQAPWrBej8bDQ/67lvmm5TqGqI50wsVGU50UnA8gYCcJtagI772eT4ctIX+EJVQzwnod2sgQDcpiagpgFdnPftZdbtvlDVEM9JaDern4PP/VJh02kJ0PnZEEAJ9Vn9HEQFdHE+nB5d2I5+u0JVQzwnod2sfg4aUJ4EBzSbDXr9bCz69DRUNcRzEtrN6ucgLqAdFKoa4jkJ7Wb1cwCgwZyEdrP6OYgM6KT83tRWhaqGeE5Cu1n9HBguVxUM0Imdv9uJ/HaFqoZ4TkK7Wf0cGEC/sqxggNZfN93uC1UN8ZyEdrP6OQDQYE5Cu1n9HGwGdDawlyzHLaAW56PZPcmn6auA0sUTut66E6BPP3OVzV++twSomM5lQJkkEbrWuhOg9753kc1eMYAWX0IyN3deci2o9FtJXGYiVGZdC+iGWfzs3n+Ost++Y3gcD+3fbrI3054DdCxc8QmghMqsawHd2IJ+8Ozixx/cu5y/cJHNX7w0/xVjUHvPbpQDWv5ZHfeXdQCU0GXrboD++h9//xeWR0vX0YWbHY0toPbe4kddALUqJkmSQWyoaojnJLSbdTdAL99/e1g0mEb7tKAZl5kI3WTdEdBp3m4WQ879xqAASuh661pAN06SLovu3PTx9m+CL873msVzHZTQtdZ1gEb9ssjUzpFE11FDVUM8J6HdrH4O+LpdMCeh3ax+DgA0mJPQblY/B/EAzdfEcx2U0DVWPwef+6WFJy0ooVKrn4OogHKZidD1Vj8HABrMSWg3q5+DiJOkSfVZPOviCV21+jmIOouXfQqfK1Q1xHMS2s3q5yAqoF2+6xyqGuI5Ce1m9XNACxrMSWg3q5+DyMuO5b8ZEqoa4jkJ7Wb1c2AAXf0zuuFaUC7UE7rO6ucgKqBdFKoa4jkJ7Wb1c7ANUPel5OIrdzsJQAmVWf0cbAN0+spQEdDZgC6e0DXWnQBd/Ojn370ygP63/Xqy9DvKawFdnA8X5yPWJBHqs64FdNMsfvb1q/GobEGlqzzWAmrRlB4kVDXEcxLazboW0E0t6MTg1C8AFa+T2wjohB9RINRr3QVQ90PIx5f10iTRSuO1gNq/Tm/oFF0NDVUN8ZyEdrPuAqjp4et18Pu3oHYQmo3d6jsAJXTJugugEzudmfa1xqBdFKoa4jkJ7WZdC+j6SdLix3awOH/hnXuXi3OFWTyAErreug7QeF8WGcuugOYKVQ3xnIR2s/o5iAio/X2kiZjQUNUQz0loN6ufg3iAui+Dyr8RGqoa4jkJ7Wb1cxAPUPcBkp3GyxSqGuI5Ce1m9XPwuV/7g1kKQAmVWf0cAGgwJ6HdrH4OADSYk9BuVj8HMQFN4E+Aey76dtCOobsXN6o1eUBvwx8PO/nOOp2sf6raZcfQ3Ysb1QqgnRSmGgA0sVAAbVsBNLHQ/T6L1xCA7lHcqNZkAV19IQAUQONb/RwAKIBeZ+iegC7/2vHq8s6ty5IBdI/iRrUeJKCrv3a8ROLWZckAukdxo1oPEtDy144tfw7DpfXH25clA+gexY1qTRbQDbP46teOK0CX1n5sX5YMoHsUN6o1WUA3tqDFrx23AG2sntu+LBlA9yhuVOthAlr82nEL0Hr9sWBZMoDuUdyo1sMEtPi14zUtqGBZMoDuUdyo1gMFNP+1Ywve5HhlDCpYlgygexQ3qjVZQDdOkkomJ73en71o7zXXH0uWJQPoHsWNak0VUL4sAqDXFwqgbSuAJhYKoG0rgCYWCqBtK4AmFtoF0M9vFqD+ZUV7AdpxAdOBsZImoMFFC7pHcaNaAbSTwlQDgCYWCqBtK4AmFgqgbSuAJhYKoG0rgCYWCqBtK4AmFgqgbSuAJhYKoG0rgCYWCqBtK4AmFgqgbSuAJhYKoG0rgCYWCqBtK4AmFgqgbSuAJhYKoG0rgCYWCqBtK4AmFgqgbSuAJhYKoG0rgCYWCqBtK4AmFgqgbSuAJhYKoG0rgCYWCqBta7d1b6vr4HYK3b24Ua0A2kmhqiGek9BuVlXs5AJQQmVWVezkAlBCZVZV7OQ6PED3G6eqjGcBNJ4OENCvdNFJt90rm1px1awA2kmhqmG7APR6rKrYyQWgACqzqmInF4ACqMyqip1cAAqgMqsqdnIBKIDKrKrYyQWgACqzqmInF4ACqMyqip1cAAqgMqsqdnIBKIDKrKrYyQWgACqzqmInF4ACqMyqip1cAAqgMqsqdnIBKIDKrKrYyQWgACqzqmInF4ACqMyqip1cAAqgMqsqdnJtB/TRa6dGbzx5z96cPv9pvjVUNWwXgF6PNTCI6yQA9IcfZdnjtx4U9wqFqobtAtDrsYakcIOEgD557z6Axj7TBEIPBtBHrzdaULuoTCt/h/VsUQAVSqsa0DpJx6D3M1rQ2GeaQOjBtKBL9wA0xpkmEAqg3a0Aej3WQABuE4ACqMwaCMBtAlAAlVkDAbhNfJIEoDKrKnZyASiAyqyq2MkFoAAqs6piJxeAAqjMqoqdXAAKoDKrKnZyASiAyqyq2MkFoAAqs6piJxeAAqjMqoqdXAAKoDKrKnZyASiAyqyq2MkFoAAqs6piJxeAAqjMqoqdXAAKoDKrKnZyASiAyqyq2MkFoAAqs6piJ9cBAhpFasVVswJoJ4WqhnhOQrtZVbGTC0AJlVlVsZMLQAmVWVWxkytBQIMPIfcuL4DGU4qA/nGDTjY+W+3VOXT34sayAmgnhaqGzwA0pVAA9VgBNJ1QAPVYATSdUAD1WAE0nVAA9VgBNJ1QAPVYATSdUAD1WAE0nVAA9VgBNJ1QAPVYATSdUAD1WAE0nVAA9VgBNJ1QAPVYATSdUAD1WAE0nVAA9VgBNJ1QAPVYATSdUAD1WAE0nVAA9VgBNJ1QAPVYDw3Q1goT96C5ZWn9SdPqXZqydr0KgHZSqGr47OAAba2BWlkVtbxCKltj3LhxNbSbALQ6F40FbxqAhhWAxhMt6N7FBdCQAtB9i/vZCWPQgALQfYsbywqgnRSqGj4D0JRCAdRjBdB0QgHUYwXQdEIB1GMF0HRCAdRjBdB0QgHUYwXQdEIB1GMF0HRCAdRjBdB0QgHUYwXQdEIB1GMF0HRCAdRjBdB0QgHUYwXQdEIB1GMF0HRCAdRjBdB0QgHUYwXQdEIB1GMF0HRCAdRjVVg0dNI5dPfixrICaCeFqoZ4TkK7WVWxkwtACZVZVbGTC0AJlVlVsZMLQAmVWVWxkwtACZVZVbGTC0AJlVlVsZMLQAmVWVWxkwtACZVZVbGTC0AJlVlVsZMLQAmVWVWxkwtACZVZVbGTC0AJlVlVsZMLQAmVWVWxkwtACZVZVbGTC0AJlVlVsZMLQAmVWVWxkwtACZVZVbGTC0AJlVlVsZMLQAmVWVWxkwtACZVZVbGTC0AJlVlVsZMLQAmVWVWxkwtACZVZVbGTC0AJlVlVsZMLQAmVWVWxkwtACZVZVbGTC0AJlVlVsZMLQAmVWVWxkwtACZVZVbGTC0AJlVlVsZMLQAmVWVWxkwtACZVZVbGTC0AJlVlVsZMLQAmVWVWxkwtACZVZVbGTC0AJlVlVsZMLQAmVWVWxkwtACZVZVbGTC0AJlVlVsZMLQAmVWVWxkwtACZVZVbGTC0AJlVlVsZMLQAmVWVWxk2tXQHV1QuiNC1USgBKatACU0KQFoIQmrTQARWiNABQlLQBFSQtAUdICUJS0rh/QRz/8KMsev3n6/KfxIl87Pb0fO/SL09NvRT/TLHvyXvQzVdW1A/qFfdlsLX7y7ViRj996kD16/UHcUPs+NGlxQ40+MW/F6KGKum5Af/Pcv5lX7vHffZS3pFH0hX2tfnM/bqiVSYsd+uhv/v5+5OrV1XUDmjctj/72U9euxZNJix9qWrHIoU/+9d9N6xn/TPWUBqBfPB+5Bp+890b00EevPfcgdugnb9juPXr1KioNQGO/xR+/+UZ2G5ptk/aEFnRPPYo+BjVtmZnZXsfILPbA95NTqzcYg+4jW3O2x404oXZ8Rg4tutm4oVl+mSl6qKLSADTuhbq8Xbkf+eqgSTVjUK6DdtT1A4rQBgEoSloAipIWgKKkBaAoaQEoSlq3A9DFec/q6EK4/5cfdgyYHl+24vrudtLf/Ygo120BdGhvJi2M1mv2tJTkUm1Ai6DF+Wj3I6JctwrQ+dloy4659gY0P8Ds3mV7A+quWweo7e37Fp6f9Y4viwduo0Fs9vQ7g15vNDP/DDP7r7kxpt7ROwa11j5D+2xBu93h7eNqB6exzbM9fJ6QH7FMc0eWvVXQrQJ0bJHsuyHibNDPx4o5tObB5O7VbHD3ynbPtr1zra25Pz8bmvu5sd6nl+9oD7q8gwucmlvbw1dx5ojN+yYfQkW6LYC6SZIhyvXF5h8HSNnxuo2GyHKj3f5/ljRzxz1nWGzv03Av7+COOH/hwvXwVZzZt7p/TzYSRla3BdBhcc82bSWD1chx4vA1/bZr24ons6mb97s20TC1vE8F6PIOeY7p420P34wr72fjvKdHEgFoVnfMTUDnZ0cX9n7F39I+q4AWO5Q5f7BzeC+gbtgqvKBw63XrAD26qPrcuosvLpA2AXU4mSfKjnl5n3YX39gh1/wFO7FqxZX38+eFFxRuvW4boK2ZSvlgcW5oNPyU3Fl6LE6zwdFFPQdq71MBOj/rt3YogsZ/2m/ElVMx+79jlOtOQt02QKvLTA6Q5mWmvEcvR4l9O1I8+rnhqnkVqblPxdjSDoWm+YWkMsEesbw/7fKh1m3X7QB0X01b40sUUQC6RbbTLj9bR/EFoNtkLx/B57UJQFHSAlCUtAAUJS0ARUkLQFHSAlCUtAAUJa3/BygCPZlq6gFpAAAAAElFTkSuQmCC" /><!-- --> Atualizado em 1/3</p>
+</div>
 </div>
 </div>
 <div id="meu-ambiente" class="section level2">
 <h2>Meu Ambiente</h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
 <pre><code>## R version 4.1.1 (2021-08-10)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
 ## Running under: Windows 10 x64 (build 19044)
@@ -275,8 +590,8 @@ a.sourceLine {
 ## [17] modelr_0.1.8      readxl_1.3.1      lifecycle_1.0.0   munsell_0.5.0    
 ## [21] gtable_0.3.0      cellranger_1.1.0  rvest_1.0.1       evaluate_0.14    
 ## [25] labeling_0.4.2    knitr_1.37        tzdb_0.1.2        fansi_0.5.0      
-## [29] highr_0.9         broom_0.7.9       Rcpp_1.0.7        backports_1.2.1  
-## [33] scales_1.1.1      jsonlite_1.7.2    farver_2.1.0      fs_1.5.0         
+## [29] highr_0.9         broom_0.7.9       Rcpp_1.0.7        scales_1.1.1     
+## [33] backports_1.2.1   jsonlite_1.7.2    farver_2.1.0      fs_1.5.0         
 ## [37] hms_1.1.0         digest_0.6.27     stringi_1.7.3     grid_4.1.1       
 ## [41] cli_3.1.1         tools_4.1.1       magrittr_2.0.1    crayon_1.4.1     
 ## [45] pkgconfig_2.0.3   ellipsis_0.3.2    xml2_1.3.2        reprex_2.0.1     

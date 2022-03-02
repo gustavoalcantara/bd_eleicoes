@@ -1,7 +1,7 @@
 ---
 title: "A relação entre o IDHM e a votação presidencial de 2018 no estado de SP"
 author: "Gustavo Casteletti de Alcântara"
-date: "27/02/2022"
+date: "02/03/2022"
 output:
   prettydoc::html_pretty:
     theme: cerulean
@@ -19,8 +19,8 @@ dados <- read.csv('dados_eleicoes.csv')
 ```
 ### Visualização do df
 A tabela a seguir é o dataframe que iremos trabalhar de agora em diante. São um pouco mais de 9k linhas e 10 colunas ao total. Veja:
-```{r}
-dplyr::glimpse(dados)
+```{r echo=FALSE}
+knitr::kable(head(dados))
 ```
 ## Votação presidenciável no 1º Turno
 A partir do df de trabalho, elaborei um gráfico simples de boxplot agrupando os municípios e a votação para cada partido: 
@@ -46,8 +46,8 @@ idhm <- read.csv('idhm_sp.csv')
 ```{r include=FALSE}
 idhm <- dplyr::rename(idhm, id_municipio = "Cod.IBGE")
 ```
-```{r}
-dplyr::glimpse(idhm)
+```{r echo=FALSE}
+knitr::kable(head(idhm))
 ```
 ### Join das tabelas
 É necessário realizar a união dos dois dataframes. Para isso vou utilizar a função left_join() do dplyr. 
@@ -66,7 +66,7 @@ dados_idhm |>
 write.csv(dados_idhm, 'idhm_dados.csv') -> dados_idhm
 ```
 ```{r}
-dplyr::glimpse(dadoseidhm)
+knitr::kable(head(dadoseidhm))
 ```
 ## Análise do IDHM com a Porcentagem de voto
 Índices são úteis para avaliar e compreender contextos diversos. É válido afirmar que o estudo do Índice de Desenvolvimento Humano Municipal é referencial de uma série de artigos, livros e discussões que relacionam-o com outras variáveis. Aqui propus relacioná-lo com a votação dos partidos nos municipios.Para isso, é necessário classificar o IDHM que varia de Muito Baixo até Muito Alto. Os municipios de São Paulo, em 2010, variam entre IDHM's Médio à muito alto, [veja Mais aqui](https://www.br.undp.org/content/brazil/pt/home/idh0/conceitos/o-que-e-o-idhm.html). 
@@ -79,10 +79,15 @@ dplyr::mutate(dadoseidhm,
                 idhm_2010<=0.699~'Medio',
     idhm_2010>=0.700 & idhm_2010<0.799~'Alto',
     idhm_2010>=0.800~'Muito Alto')) -> dadoseidhm
+
+```
+```{r echo=FALSE}
+knitr::kable(head(dadoseidhm))
 ```
 
-### Gráficos
-```{r}
+### Gráficos e Possíveis Análises
+#### BoxPlot e relação com o IDHM por partidos no 1º Turno
+```{r echo=FALSE}
 dplyr::filter(dadoseidhm,
               turno==1) |>
   dplyr::group_by(id_municipio)|>
@@ -96,8 +101,8 @@ dplyr::filter(dadoseidhm,
   x = "Partidos", y = "Porcentagem de Votos")
 ```
 
-### 2º Turno 
-```{r}
+#### 2º Turno 
+```{r echo=FALSE}
 dplyr::filter(dadoseidhm,
               turno==2) |>
   dplyr::group_by(id_municipio)|>
@@ -110,7 +115,7 @@ dplyr::filter(dadoseidhm,
   labs(title="Votação Presidencial em SP no 2º Turno e IDHM (2010)",
   x = "Partidos", y = "Porcentagem de Votos")
 ```
-Atualizado em 1/3
+Atualizado em 2/3
 
 
 
