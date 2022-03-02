@@ -27,7 +27,7 @@ A partir do df de trabalho, elaborei um gráfico simples de boxplot agrupando os
 ```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 library(tidyverse)
 ```
-```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 dplyr::filter(dados,
               turno==1)|>
   dplyr::group_by(id_municipio)|>
@@ -65,11 +65,11 @@ dados_idhm |>
 ```{r include=FALSE}
 write.csv(dados_idhm, 'idhm_dados.csv') -> dados_idhm
 ```
-```{r}
+```{r echo=FALSE}
 knitr::kable(head(dadoseidhm))
 ```
 ## Análise do IDHM com a Porcentagem de voto
-Índices são úteis para avaliar e compreender contextos diversos. É válido afirmar que o estudo do Índice de Desenvolvimento Humano Municipal é referencial de uma série de artigos, livros e discussões que relacionam-o com outras variáveis. Aqui propus relacioná-lo com a votação dos partidos nos municipios.Para isso, é necessário classificar o IDHM que varia de Muito Baixo até Muito Alto. Os municipios de São Paulo, em 2010, variam entre IDHM's Médio à muito alto, [veja Mais aqui](https://www.br.undp.org/content/brazil/pt/home/idh0/conceitos/o-que-e-o-idhm.html). 
+Índices são úteis para avaliar e compreender contextos diversos. É válido afirmar que o estudo do Índice de Desenvolvimento Humano Municipal é referencial de uma série de artigos, livros e discussões que relacionam-o com outras variáveis. Aqui propus relacioná-lo com a votação dos partidos nos municipios.Para isso, é necessário classificar o IDHM que varia de Muito Baixo até Muito Alto. Os municipios de São Paulo, em 2010, variam entre IDHM's Médio à muito alto, [veja mais aqui](https://www.br.undp.org/content/brazil/pt/home/idh0/conceitos/o-que-e-o-idhm.html). 
 Assim, classifiquei o IDHM dos municipios paulsitas de acordo com a regra abaixo e elaborei um gráfico simples para visualizar a relação entre os votos nos candidatos e o IDHM dos municípios.
 
 ### Classificação do IDHM 
@@ -79,8 +79,8 @@ dplyr::mutate(dadoseidhm,
                 idhm_2010<=0.699~'Medio',
     idhm_2010>=0.700 & idhm_2010<0.799~'Alto',
     idhm_2010>=0.800~'Muito Alto')) -> dadoseidhm
-
 ```
+
 ```{r echo=FALSE}
 knitr::kable(head(dadoseidhm))
 ```
@@ -117,7 +117,32 @@ dplyr::filter(dadoseidhm,
 ```
 Atualizado em 2/3
 
+### 2º Turno e Gráfico de Dispersão com Regressão Linear
+```{r echo=FALSE}
+dplyr::filter(dadoseidhm,
+              turno==2) |>
+  dplyr::group_by(id_municipio)|>
+  ggplot2::ggplot(aes(x=idhm_2010,
+                      y=porcentagem,
+                      color=resultado))+
+  geom_point()+
+  geom_smooth()+
+  labs(title="Relação entre IDHM e Porcentagem de Votos em SP",
+  x = "Partidos",
+  y = "Porcentagem de Votos",
+  colour = 'Candidato')
+```
 
+## Referências
+### Datasets
+[Base dos Dados](https://github.com/basedosdados)
+
+[Datalake das Eleições da Base dos Dados](https://basedosdados.org/dataset/br-tse-eleicoes)
+
+[Atlas do Desenvolvimento Humano - PNUD](https://www.br.undp.org/content/brazil/pt/home/idh0/rankings/idhm-municipios-2010.html)
+
+### Pacotes
+[Tidyverse](https://www.tidyverse.org/)
 
 ## Meu Ambiente
 ```{r}
