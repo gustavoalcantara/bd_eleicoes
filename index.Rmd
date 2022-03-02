@@ -127,11 +127,17 @@ dplyr::filter(dadoseidhm,
                       color=resultado))+
   geom_point()+
   geom_smooth()+
+  scale_color_discrete(labels=c("Bolsonaro", "Fernando Haddad"))+
   labs(title="Relação entre IDHM e Porcentagem de Votos em SP",
-  x = "Partidos",
-  y = "Porcentagem de Votos",
-  colour = 'Candidato')
+       x = "IDHM",
+       y = "Porcentagem de Votos",
+       colour = 'Candidato:')+
+  theme(legend.position = 'bottom')
 ```
+
+## Considerações 
+Este case é fruto de uma das etapas do processo seletivo da Base dos Dados. Aqui tentei relacionar uma tabela externa com uma base disponibilizada pela organização, além do acesso do datalake via RStudio. 
+
 
 ## Referências
 ### Datasets
