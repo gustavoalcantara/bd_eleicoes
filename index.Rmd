@@ -135,7 +135,10 @@ dplyr::filter(dadoseidhm,
 ```
 
 ## Considerações 
-Este case é fruto de uma das etapas do processo seletivo da Base dos Dados. Aqui tentei relacionar uma tabela externa com uma base disponibilizada pela organização, além do acesso do datalake via RStudio. Espero que tenha atendido às expectativas da instituição. Fico Grato pela leitura deste material e futuro feedback.  
+Este case é fruto de uma das etapas do processo seletivo da Base dos Dados. Aqui tentei relacionar uma tabela externa com uma base disponibilizada pela organização, além do acesso do datalake via RStudio. As interpretações dos gráficos aqui apresentados são diversas. Acredito que a principal seja a relação da baixa quantidade de votos de Fernando Haddad principalmente em municipios do estado de São Paulo classificados com alto IDHM. É fato que futuras análises possam emergir e outros bancos de dados serem adicionados para complexificar e criar novos insights.
+Assim, espero que tenha atendido às expectativas da instituição quanto à proposta. Fico Grato pela leitura deste material e futuro feedback. 
+Muito obrigado. 
+
 
 ## Referências
 ### Datasets
