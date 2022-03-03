@@ -303,25 +303,8 @@ a.sourceLine {
 <h3>Join das tabelas</h3>
 <p>É necessário realizar a união dos dois dataframes. Para isso vou utilizar a função left_join() do dplyr. Veja essa função <a href="https://github.com/gustavoalcantara/bd_eleicoes/blob/master/script_de_testes.R">aqui</a>.</p>
 <table>
-<colgroup>
-<col width="4%" />
-<col width="5%" />
-<col width="8%" />
-<col width="12%" />
-<col width="11%" />
-<col width="5%" />
-<col width="10%" />
-<col width="10%" />
-<col width="11%" />
-<col width="11%" />
-<col width="9%" />
-</colgroup>
 <thead>
 <tr class="header">
-<th align="right">ano</th>
-<th align="right">turno</th>
-<th align="left">sigla_uf</th>
-<th align="left">sigla_partido</th>
 <th align="right">id_municipio</th>
 <th align="right">votos</th>
 <th align="left">resultado</th>
@@ -333,10 +316,6 @@ a.sourceLine {
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">2018</td>
-<td align="right">1</td>
-<td align="left">SP</td>
-<td align="left">MDB</td>
 <td align="right">3501103</td>
 <td align="right">35</td>
 <td align="left">nao eleito</td>
@@ -346,10 +325,6 @@ a.sourceLine {
 <td align="right">0.700</td>
 </tr>
 <tr class="even">
-<td align="right">2018</td>
-<td align="right">1</td>
-<td align="left">SP</td>
-<td align="left">PATRIOTA</td>
 <td align="right">3501103</td>
 <td align="right">13</td>
 <td align="left">nao eleito</td>
@@ -359,10 +334,6 @@ a.sourceLine {
 <td align="right">0.700</td>
 </tr>
 <tr class="odd">
-<td align="right">2018</td>
-<td align="right">1</td>
-<td align="left">SP</td>
-<td align="left">PDT</td>
 <td align="right">3501103</td>
 <td align="right">115</td>
 <td align="left">nao eleito</td>
@@ -372,10 +343,6 @@ a.sourceLine {
 <td align="right">0.700</td>
 </tr>
 <tr class="even">
-<td align="right">2018</td>
-<td align="right">1</td>
-<td align="left">SP</td>
-<td align="left">PPL</td>
 <td align="right">3501103</td>
 <td align="right">2</td>
 <td align="left">nao eleito</td>
@@ -385,10 +352,6 @@ a.sourceLine {
 <td align="right">0.700</td>
 </tr>
 <tr class="odd">
-<td align="right">2018</td>
-<td align="right">1</td>
-<td align="left">SP</td>
-<td align="left">PSOL</td>
 <td align="right">3501103</td>
 <td align="right">4</td>
 <td align="left">nao eleito</td>
@@ -398,10 +361,6 @@ a.sourceLine {
 <td align="right">0.700</td>
 </tr>
 <tr class="even">
-<td align="right">2018</td>
-<td align="right">1</td>
-<td align="left">SP</td>
-<td align="left">PDT</td>
 <td align="right">3501152</td>
 <td align="right">994</td>
 <td align="left">nao eleito</td>
@@ -425,30 +384,8 @@ a.sourceLine {
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    idhm_2010<span class="sc">&gt;=</span><span class="fl">0.700</span> <span class="sc">&amp;</span> idhm_2010<span class="sc">&lt;</span><span class="fl">0.799</span><span class="sc">~</span><span class="st">&#39;Alto&#39;</span>,</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    idhm_2010<span class="sc">&gt;=</span><span class="fl">0.800</span><span class="sc">~</span><span class="st">&#39;Muito Alto&#39;</span>)) <span class="ot">-&gt;</span> dadoseidhm</span></code></pre></div>
 <table>
-<colgroup>
-<col width="3%" />
-<col width="4%" />
-<col width="7%" />
-<col width="10%" />
-<col width="10%" />
-<col width="4%" />
-<col width="8%" />
-<col width="8%" />
-<col width="9%" />
-<col width="9%" />
-<col width="7%" />
-<col width="14%" />
-</colgroup>
 <thead>
 <tr class="header">
-<th align="right">ano</th>
-<th align="right">turno</th>
-<th align="left">sigla_uf</th>
-<th align="left">sigla_partido</th>
-<th align="right">id_municipio</th>
-<th align="right">votos</th>
-<th align="left">resultado</th>
-<th align="left">cargo</th>
 <th align="right">porcentagem</th>
 <th align="left">Município</th>
 <th align="right">idhm_2010</th>
@@ -457,84 +394,36 @@ a.sourceLine {
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">2018</td>
-<td align="right">1</td>
-<td align="left">SP</td>
-<td align="left">MDB</td>
-<td align="right">3501103</td>
-<td align="right">35</td>
-<td align="left">nao eleito</td>
-<td align="left">presidente</td>
 <td align="right">0.6962403</td>
 <td align="left">Alto Alegre</td>
 <td align="right">0.700</td>
 <td align="left">Alto</td>
 </tr>
 <tr class="even">
-<td align="right">2018</td>
-<td align="right">1</td>
-<td align="left">SP</td>
-<td align="left">PATRIOTA</td>
-<td align="right">3501103</td>
-<td align="right">13</td>
-<td align="left">nao eleito</td>
-<td align="left">presidente</td>
 <td align="right">0.2586035</td>
 <td align="left">Alto Alegre</td>
 <td align="right">0.700</td>
 <td align="left">Alto</td>
 </tr>
 <tr class="odd">
-<td align="right">2018</td>
-<td align="right">1</td>
-<td align="left">SP</td>
-<td align="left">PDT</td>
-<td align="right">3501103</td>
-<td align="right">115</td>
-<td align="left">nao eleito</td>
-<td align="left">presidente</td>
 <td align="right">2.2876467</td>
 <td align="left">Alto Alegre</td>
 <td align="right">0.700</td>
 <td align="left">Alto</td>
 </tr>
 <tr class="even">
-<td align="right">2018</td>
-<td align="right">1</td>
-<td align="left">SP</td>
-<td align="left">PPL</td>
-<td align="right">3501103</td>
-<td align="right">2</td>
-<td align="left">nao eleito</td>
-<td align="left">presidente</td>
 <td align="right">0.0397852</td>
 <td align="left">Alto Alegre</td>
 <td align="right">0.700</td>
 <td align="left">Alto</td>
 </tr>
 <tr class="odd">
-<td align="right">2018</td>
-<td align="right">1</td>
-<td align="left">SP</td>
-<td align="left">PSOL</td>
-<td align="right">3501103</td>
-<td align="right">4</td>
-<td align="left">nao eleito</td>
-<td align="left">presidente</td>
 <td align="right">0.0795703</td>
 <td align="left">Alto Alegre</td>
 <td align="right">0.700</td>
 <td align="left">Alto</td>
 </tr>
 <tr class="even">
-<td align="right">2018</td>
-<td align="right">1</td>
-<td align="left">SP</td>
-<td align="left">PDT</td>
-<td align="right">3501152</td>
-<td align="right">994</td>
-<td align="left">nao eleito</td>
-<td align="left">presidente</td>
 <td align="right">5.0771274</td>
 <td align="left">Alumínio</td>
 <td align="right">0.766</td>
