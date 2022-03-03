@@ -3,14 +3,14 @@ title: "A relação entre o IDHM e a votação presidencial de 2018 no estado de
 author: "Gustavo Casteletti de Alcântara"
 date: "02/03/2022"
 output:
-  prettydoc::html_pretty:
-    theme: cerulean
+   prettydoc::html_pretty:
+    theme: architect
 editor_options: 
   chunk_output_type: console
 ---
 ## Introdução
-Seguindo a proposta do Case, utilizei, através da [Base dos Dados](https://basedosdados.org/), a tabela dos resultados das Eleições Brasileiras disponíveis [aqui](https://basedosdados.org/dataset/br-tse-eleicoes). 
-O acesso e utilização do pacote [basedosdados](https://basedosdados.github.io/mais/api_reference_r/) no Rstudio, o download e limpeza inicial (seleção, filtragem de atributos e criação de variáveis) encontram-se [aqui](https://github.com/gustavoalcantara/bd_eleicoes/blob/master/script_download_limpeza_dataset.R)
+Seguindo a proposta do Case, utilizei, através da [Base dos Dados](https://basedosdados.org/), a tabela dos resultados das Eleições Brasileiras por município disponível [aqui](https://basedosdados.org/dataset/br-tse-eleicoes). 
+O acesso e utilização do pacote [basedosdados](https://basedosdados.github.io/mais/api_reference_r/) no Rstudio, o download e limpeza inicial (seleção, filtragem de atributos e criação de variáveis) encontram-se [aqui](https://github.com/gustavoalcantara/bd_eleicoes/blob/master/script_download_limpeza_dataset.R).
 
 ### DF de trabalho e outras proposições
 Com o df pronto para uso, é válido ressaltar que a tabela inicial possuía cerca de 23M de linhas. Se fosse necessário o download deste arquivo em minha máquina, faria a seleção e limpeza dos dados atráves do datalake do Google pela regra SQL que elaborei. Visualize-a [aqui](https://console.cloud.google.com/bigquery?sq=52786671863:dca4197316d34aca8d3f63ef74044d34).  
@@ -18,7 +18,7 @@ Com o df pronto para uso, é válido ressaltar que a tabela inicial possuía cer
 dados <- read.csv('dados_eleicoes.csv')
 ```
 ### Visualização do df
-A tabela a seguir é o dataframe que iremos trabalhar de agora em diante. São um pouco mais de 9k linhas e 10 colunas ao total. Veja:
+A tabela a seguir é o dataframe que iremos trabalhar de agora em diante. São um pouco mais de 9k linhas e 10 colunas ao total. Selecionei a votação presidencial para o estado de São Paulo no ano de 2018. Veja:
 ```{r echo=FALSE}
 knitr::kable(head(dados))
 ```
@@ -50,7 +50,7 @@ idhm <- dplyr::rename(idhm, id_municipio = "Cod.IBGE")
 knitr::kable(head(idhm))
 ```
 ### Join das tabelas
-É necessário realizar a união dos dois dataframes. Para isso vou utilizar a função left_join() do dplyr. 
+É necessário realizar a união dos dois dataframes. Para isso vou utilizar a função left_join() do dplyr. Veja essa função [aqui](https://github.com/gustavoalcantara/bd_eleicoes/blob/master/script_de_testes.R). 
 ```{r include=FALSE}
 dplyr::left_join(dados, 
                  idhm, 
@@ -69,8 +69,8 @@ write.csv(dados_idhm, 'idhm_dados.csv') -> dados_idhm
 knitr::kable(head(dadoseidhm))
 ```
 ## Análise do IDHM com a Porcentagem de voto
-Índices são úteis para avaliar e compreender contextos diversos. É válido afirmar que o estudo do Índice de Desenvolvimento Humano Municipal é referencial de uma série de artigos, livros e discussões que relacionam-o com outras variáveis. Aqui propus relacioná-lo com a votação dos partidos nos municipios.Para isso, é necessário classificar o IDHM que varia de Muito Baixo até Muito Alto. Os municipios de São Paulo, em 2010, variam entre IDHM's Médio à muito alto, [veja mais aqui](https://www.br.undp.org/content/brazil/pt/home/idh0/conceitos/o-que-e-o-idhm.html). 
-Assim, classifiquei o IDHM dos municipios paulsitas de acordo com a regra abaixo e elaborei um gráfico simples para visualizar a relação entre os votos nos candidatos e o IDHM dos municípios.
+Índices são úteis para avaliar e compreender contextos diversos. É válido afirmar que o estudo do Índice de Desenvolvimento Humano Municipal é referencial de uma série de artigos, livros e discussões que relacionam-o com outras variáveis. Aqui propus relacioná-lo com a votação dos partidos nos municipios.Para isso, é necessário classificar o IDHM que varia de Muito Baixo até Muito Alto. Os municipios de São Paulo, em 2010, variam entre IDHM's Médio à Muito Alto, [veja mais aqui](https://www.br.undp.org/content/brazil/pt/home/idh0/conceitos/o-que-e-o-idhm.html). 
+Assim, classifiquei o IDHM dos municipios paulistas de acordo com a regra estabelecida e elaborei um gráfico simples para visualizar a relação entre os votos nos candidatos e o IDHM dos municípios.
 
 ### Classificação do IDHM 
 ```{r}
@@ -115,7 +115,6 @@ dplyr::filter(dadoseidhm,
   labs(title="Votação Presidencial em SP no 2º Turno e IDHM (2010)",
   x = "Partidos", y = "Porcentagem de Votos")
 ```
-Atualizado em 2/3
 
 ### 2º Turno e Gráfico de Dispersão com Regressão Linear
 ```{r echo=FALSE}
@@ -136,10 +135,7 @@ dplyr::filter(dadoseidhm,
 ```
 
 ## Considerações 
-Este case é fruto de uma das etapas do processo seletivo da Base dos Dados. Aqui tentei relacionar uma tabela externa com uma base disponibilizada pela organização, além do acesso do datalake via RStudio. 
-
-Atualização 2/3
-
+Este case é fruto de uma das etapas do processo seletivo da Base dos Dados. Aqui tentei relacionar uma tabela externa com uma base disponibilizada pela organização, além do acesso do datalake via RStudio. Espero que tenha atendido às expectativas da instituição. Fico Grato pela leitura deste material e futuro feedback.  
 
 ## Referências
 ### Datasets

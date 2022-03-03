@@ -31,9 +31,11 @@ idhm %>%
 unique(idhm$classificacao_idhm)
 
 #atualizacao 1/3
+
 read.csv('dados_idhm.csv') -> x
-x |>
-  mutate(classificacao_idhm=case_when(
+dplyr::mutate(x,
+              classificacao_idhm =
+    dplyr::case_when(
     idhm_2010<=0.699~'medio',
     idhm_2010>=0.700 & idhm_2010<0.799~'alto',
     idhm_2010>=0.800~'muito alto')) -> x
@@ -49,6 +51,57 @@ dplyr::filter(x,
   geom_smooth()
 
 
+
+#Tabela classificação IDHM
+library(stringr)
+stringr::str_replace(x$resultado, "eleito", "Eleito") -> x
+stringr::str_replace(x$resultado, "nao eleito", "Nao Eleito")
+
+
+library(tidyverse)
 dplyr::filter(x,
               turno==2) ->y
-  
+
+dplyr::mutate(y,
+              classificacao_idhm=case_when(
+                idhm_2010<=0.699~'Medio',
+                idhm_2010>=0.700 & idhm_2010<0.799~'Alto',
+                idhm_2010>=0.800~'Muito Alto')|>
+  dplyr::mutate(
+  Resultado = case_when(
+    resultado=='eleito'~'Eleito',
+    resultado=='nao eleito'~'Nao Eleito'
+  )
+)
+
+#Grafico 1
+dplyr::filter(x,
+              turno==1) |>
+  dplyr::group_by(id_municipio)|>
+  ggplot2::ggplot(aes(x=reorder(sigla_partido, porcentagem, 
+                                FUN=median), y=porcentagem,
+                      fill=classificacao_idhm))+
+  geom_boxplot()+
+  scale_fill_discrete(name='IDHM',breaks=c('Medio', 'Alto', 'Muito Alto'))+
+  coord_flip()+
+  labs(title="Votação Presidencial em SP no 1º Turno e IDHM (2010)",
+       x = "Partidos", y = "Porcentagem de Votos")
+
+graphics.off()
+
+
+#Grafico 3
+dplyr::filter(x,
+              turno==2) |>
+  dplyr::group_by(id_municipio)|>
+  ggplot2::ggplot(aes(x=idhm_2010,
+                      y=porcentagem,
+                      color=resultado))+
+  geom_point()+
+  geom_smooth()+
+  scale_color_discrete(labels=c("Bolsonaro", "Fernando Haddad"))+
+  labs(title="Relação entre IDHM e Porcentagem de Votos em SP",
+       x = "IDHM",
+       y = "Porcentagem de Votos",
+       colour = 'Candidato:')+
+  theme(legend.position = 'bottom')
