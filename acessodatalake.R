@@ -36,6 +36,8 @@ dplyr::select(df, ano,
 
 write.csv(ele_pr_sp_2018, "dados_eleicoes.csv", row.names = TRUE)
 
+# Atualizado 7/3
+
   
   
 
