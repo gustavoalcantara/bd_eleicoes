@@ -1,7 +1,7 @@
 ---
 title: "A relação entre o IDHM e a votação presidencial de 2018 no estado de SP"
 author: "Gustavo Casteletti de Alcântara"
-date: "02/03/2022"
+date: "07/03/2022"
 output:
    prettydoc::html_pretty:
     theme: architect
@@ -10,7 +10,7 @@ editor_options:
 ---
 ## Introdução
 Seguindo a proposta do Case, utilizei, através da [Base dos Dados](https://basedosdados.org/), a tabela dos resultados das Eleições Brasileiras por município disponível [aqui](https://basedosdados.org/dataset/br-tse-eleicoes). 
-O acesso e utilização do pacote [basedosdados](https://basedosdados.github.io/mais/api_reference_r/) no Rstudio, o download e limpeza inicial (seleção, filtragem de atributos e criação de variáveis) encontram-se [aqui](https://github.com/gustavoalcantara/bd_eleicoes/blob/master/script_download_limpeza_dataset.R).
+O acesso e utilização do pacote [basedosdados](https://basedosdados.github.io/mais/api_reference_r/) no Rstudio, o download e limpeza inicial (seleção, filtragem de atributos e criação de variáveis) encontram-se [aqui](https://github.com/gustavoalcantara/bd_eleicoes/blob/master/acessodatalake.R).
 
 ### DF de trabalho e outras proposições
 Com o df pronto para uso, é válido ressaltar que a tabela inicial possuía cerca de 23M de linhas. Se fosse necessário o download deste arquivo em minha máquina, faria a seleção e limpeza dos dados atráves do datalake do Google pela regra SQL que elaborei. Visualize-a [aqui](https://console.cloud.google.com/bigquery?sq=52786671863:dca4197316d34aca8d3f63ef74044d34).  
